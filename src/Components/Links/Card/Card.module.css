@@ -1,0 +1,18 @@
+.main{
+    background-color: #fff;
+    display: flex;
+    flex: 1;
+    padding: 12px;
+    margin: 8px;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0px 10px 0px 10px;
+    border-radius: 4px;
+}
+
+.main .left{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 8px;
+}

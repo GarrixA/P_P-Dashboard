@@ -8,6 +8,7 @@
 }
 
 .mainWrapper .left{
-    background-color: #c29d59;
+    background-color: #fff;
     flex: 1.2;
+    box-shadow: 10px rgb(49, 49, 49, 0.8);
 }

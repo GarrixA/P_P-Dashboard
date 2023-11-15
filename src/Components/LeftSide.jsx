@@ -7,6 +7,7 @@ import { SiSparkar } from "react-icons/si";
 import { SiNumpy } from "react-icons/si";
 import { ImListNumbered } from "react-icons/im";
 import { IoSettingsSharp } from "react-icons/io5";
+import { IoIosLogOut } from "react-icons/io";
 
 function LeftSide() {
   return (
@@ -23,7 +24,7 @@ function LeftSide() {
         <span><IoSettingsSharp /><Link>Settings</Link></span>
       </div>
       <div className={left.logout}>
-        <h3>Logout</h3>
+        <h3><IoIosLogOut /><Link>Logout</Link></h3>
       </div>
     </div>
   )
