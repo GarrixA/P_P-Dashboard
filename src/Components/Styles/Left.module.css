@@ -1,0 +1,11 @@
+.mainWapper{
+    background-color: rgb(27, 124, 209);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+.mainWapper .links{
+    display: flex;
+    flex-direction: column;
+
+}

@@ -1,0 +1,13 @@
+.mainWrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.mainWrapper .top{
+    flex: 5;
+}
+
+.mainWrapper .left{
+    background-color: #c29d59;
+    flex: 1;
+}
