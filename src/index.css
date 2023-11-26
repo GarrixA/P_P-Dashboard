@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media (min-width: 768){
+    #loginAnim{
+        display: none;
+    }
+}
+
+#loginAnim{
+    animation-name: log;
+    animation-duration: 1s;
+    position: absolute;
+}
+
+@keyframes log{
+    0%{
+        left: 100%;
+    }100%{
+        left: 0%;
+    }
+}
+
+#logDit{
+    position: relative;
+    animation: logDit;
+    animation-duration: 2s;
+}
+
+@keyframes logDit{
+    0%{
+        top: 100%;
+    }100%{
+        top: 0%;
+    }
+}
+
+#cont{
+    position: absolute;
+    animation: bodar;
+    animation-duration: 1.7s;
+}
+
+@keyframes bodar{
+    0%{
+        top: 100%;
+    }100%{
+        top: 0%;
+    }
+}
