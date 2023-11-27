@@ -9,7 +9,7 @@ import UserStats from "../../usercomponents/usercards/UserStats.jsx";
 export default function UserDashboard() {
   return (
     <>
-    <div>
+    <div className=" relative bottom-16">
             {/* Card stats */}
             <div className="flex relative bottom-16 flex-wrap md:justify-between ">
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
