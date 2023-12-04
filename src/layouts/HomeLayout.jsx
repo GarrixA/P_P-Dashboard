@@ -5,7 +5,7 @@ import Topbar from "../components/Topbar";
 export default function HomeLayout() {
   return (
     <>
-    <Topbar/>
+    {/* <Topbar/> */}
       <Outlet />
     </>
   );
