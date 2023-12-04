@@ -1,88 +1,70 @@
-import React from "react";
-import { createPopper } from "@popperjs/core";
+import React, { useState } from "react";
 import Team from "../../assets/img/team-1-800x800.jpg";
-
+import { IoNotifications } from "react-icons/io5";
+import images from "./UserDropdownArray";
 
 const UserDropdown = () => {
-  // dropdown props
-  const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
-  const btnDropdownRef = React.createRef();
-  const popoverDropdownRef = React.createRef();
-  const openDropdownPopover = () => {
-    createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
-      placement: "bottom-start",
-    });
-    setDropdownPopoverShow(true);
-  };
-  const closeDropdownPopover = () => {
-    setDropdownPopoverShow(false);
+  const [openModal, setOpenModal] = useState(false);
+  const toggleModal = () => {
+    setOpenModal(!openModal);
   };
   return (
     <>
-      <a
-        className="text-blueGray-500 block"
-        href="#pablo"
-        ref={btnDropdownRef}
-        onClick={(e) => {
-          e.preventDefault();
-          dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
-        }}
-      >
-        <div className="items-center flex">
-          <span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
-            <img
-              alt="..."
-              className="w-full rounded-full align-middle border-none shadow-lg"
-              src={Team}
-            />
-          </span>
-        </div>
-      </a>
-      <div
-        ref={popoverDropdownRef}
-        className={
-          (dropdownPopoverShow ? "block " : "hidden ") +
-          "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
-        }
-      >
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Another action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Something else here
-        </a>
-        <div className="h-0 my-2 border border-solid border-blueGray-100" />
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Seprated link
-        </a>
+      <div className="items-center flex text-white text-4xl justify-evenly bg-slate-400 w-full rounded-md py-1 bg-opacity-40 shadow-md">
+        <span>
+          <IoNotifications onClick={toggleModal} className="pointer" />
+        </span>
+        <span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
+          <img
+            alt="..."
+            className="w-full rounded-full align-middle border-none shadow-lg"
+            src={Team}
+          />
+        </span>
+        {openModal && (
+          <div style={{
+            display: "flex",
+            // position: "absolute",
+            backgroundColor: "white",
+            // top: "4rem",
+            // marginTop: "0.5px",
+            // width: "20rem",
+            // right: "2.5rem",
+            // borderRadius: "0.375"
+          }} >
+            <div style={{
+              backgroundColor:"white"
+              
+              }}>
+              <h1 style={{
+                color: '#252525',
+                fontSize: ''
+              }}>Notification</h1>
+
+              {images.map((item, idx) => {
+                return (
+                  <div key={idx} style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "20px"
+                    }} className="flex flex-row gap-[1.25em] rounded-r-md overflow-hidden">
+                    <div className="w-[2rem] h-[2rem] overflow-hidden rounded-full">
+                      <img src={item.image} alt="img" />
+                    </div>
+
+                    <div className="text-[]#252525 flex flex-col">
+                      <span className="text-[.70rem] leading-[0.625rem] text-[#252525]">{item.title}</span>
+                      <span style={{ background: "blue", fontSize:"10px",lineHeight: "10px"}} className="text-[0625rem] leading[.625rem] text-[#252525]">{item.description}</span>
+
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
+      <div></div>
     </>
   );
 };

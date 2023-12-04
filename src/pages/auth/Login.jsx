@@ -1,18 +1,16 @@
-// LoginForm.js
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-const Login = () => {
+const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const handleLogin = () => {
-    // Assume admin credentials
-    if (username === 'klabadmin' && password === 'password') {
-      navigate('/dashboard');
+    if (username === 'admin' && password === 'adminpass') {
+      history.push('/admin');
     } else {
-      navigate('/managerDashboard');
+      history.push('/local');
     }
   };
 
@@ -33,4 +31,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginForm;

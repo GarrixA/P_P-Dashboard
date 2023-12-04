@@ -10,11 +10,12 @@ import Settings from "./pages/dashboard/Settings.jsx";
 import Tables from "./pages/dashboard/Tables.jsx";
 import Signup from "./pages/Signup.jsx";
 import UserDashboardLayout from './components/UserAdmin/userlayouts/UserDashboardLayout.jsx';
-import UserDashboard from './components/UserAdmin//userpages/Dashboard/UserDashboard.jsx';
+import ManagerDashboard from './components/UserAdmin//userpages/Dashboard/ManagerDashboard.jsx';
 import UserSettings from './components/UserAdmin/userpages/Dashboard/UserSettings.jsx';
 import UserTables from './components/UserAdmin/userpages/Dashboard/UserTables.jsx';
 import BookedSlots from "./components/UserAdmin/usercomponents/usercards/BookedSlots.jsx";
 import RemainingSlots from "./components/UserAdmin/usercomponents/usercards/RemainingSlots.jsx";
+import TotalSlots from "./components/UserAdmin/usercomponents/usercards/TotalSlots.jsx";
 
 export default function App() {
   return (
@@ -33,14 +34,14 @@ export default function App() {
             <Route path="/dashboard/settings" element={<Settings />} />
             <Route path="/dashboard/tables" element={<Tables />} />
           </Route>
-          <Route path="userdashboard" element={<UserDashboardLayout />}>
-            <Route path="" element={<Navigate to={"/userdashboard/stats"} />} />
-            <Route path="/userdashboard/stats" index element={<UserDashboard />} />
-            <Route path="/userdashboard/stats" index element={<UserDashboard />} />
-            <Route path="/userdashboard/UserSettings" element={<UserSettings />} />
-            <Route path="/userdashboard/tables" element={<UserTables />} />
-            <Route path="/userdashboard/booked" element={<BookedSlots/>}/>
-            <Route path="/userdashboard/remaining" element={<RemainingSlots/>}/>
+          <Route path="managerDashboard" element={<UserDashboardLayout />}>
+            <Route path="" element={<Navigate to={"/managerDashboard/stats"} />} />
+            <Route path="/managerDashboard/stats" index element={<ManagerDashboard />} />
+            <Route path="/managerDashboard/slots" index element={<TotalSlots />} />
+            <Route path="/managerDashboard/UserSettings" element={<UserSettings />} />
+            <Route path="/managerDashboard/tables" element={<UserTables />} />
+            <Route path="/managerDashboard/booked" element={<BookedSlots/>}/>
+            <Route path="/managerDashboard/remaining" element={<RemainingSlots/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

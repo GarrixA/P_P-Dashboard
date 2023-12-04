@@ -7,13 +7,13 @@ import CardStats from "../../components/Cards/CardStats.jsx";
 export default function Dashboard() {
   return (
     <>
-    <div className=" relative bottom-16">
+    <div className=" relative md:bottom-48">
             {/* Card stats */}
             <div className="flex flex-wrap">
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
                   statSubtitle="BUILDINGS"
-                  statTitle="350,897"
+                  statTitle="35"
                   statArrow="up"
                   statPercent="3.48"
                   statPercentColor="text-emerald-500"
@@ -25,7 +25,7 @@ export default function Dashboard() {
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
                   statSubtitle="SLOTS"
-                  statTitle="2,356"
+                  statTitle="5,356"
                   statArrow="down"
                   statPercent="3.48"
                   statPercentColor="text-red-500"
@@ -49,7 +49,7 @@ export default function Dashboard() {
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
                   statSubtitle="REMAINING SLOTS"
-                  statTitle="49,65%"
+                  statTitle="65%"
                   statArrow="up"
                   statPercent="12"
                   statPercentColor="text-emerald-500"
