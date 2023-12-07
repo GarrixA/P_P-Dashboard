@@ -3,217 +3,52 @@ const SlotsArray = [
         parkId: "M 012 East",
         price: 1500,
         booked: "12 minago",
-        status: "booked"
+        status: "Available"
     },{
         parkId: "M 012 East",
         price: 1500,
         booked: "12 minago",
-        status: "booked"
+        status: "Available"
     },{
         parkId: "M 012 East",
         price: 1500,
         booked: "12 minago",
-        status: "booked"
+        status: "Available"
     },{
         parkId: "M 012 East",
         price: 1500,
         booked: "12 minago",
-        status: "booked"
+        status: "Available"
     },{
         parkId: "M 012 East",
         price: 1500,
         booked: "12 minago",
-        status: "booked"
+        status: "Available"
     },{
         parkId: "M 012 East",
         price: 1500,
         booked: "12 minago",
-        status: "booked"
+        status: "Available"
     },{
         parkId: "M 012 East",
         price: 1500,
         booked: "12 minago",
-        status: "booked"
+        status: "Available"
     },{
         parkId: "M 012 East",
         price: 1500,
         booked: "12 minago",
-        status: "booked"
+        status: "Available"
     },{
         parkId: "M 012 East",
         price: 1500,
         booked: "12 minago",
-        status: "booked"
+        status: "Available"
     },{
         parkId: "M 012 East",
         price: 1500,
         booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
-    },{
-        parkId: "M 012 East",
-        price: 1500,
-        booked: "12 minago",
-        status: "booked"
+        status: "Available"
     }
 ]
 export default SlotsArray

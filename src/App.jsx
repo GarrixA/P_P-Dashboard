@@ -16,6 +16,7 @@ import UserTables from './components/UserAdmin/userpages/Dashboard/UserTables.js
 import BookedSlots from "./components/UserAdmin/usercomponents/usercards/BookedSlots.jsx";
 import RemainingSlots from "./components/UserAdmin/usercomponents/usercards/RemainingSlots.jsx";
 import TotalSlots from "./components/UserAdmin/usercomponents/usercards/TotalSlots.jsx";
+import CaSettings from "./components/UserAdmin/usercomponents/usercards/CaSettings.jsx";
 
 export default function App() {
   return (
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="/managerDashboard/tables" element={<UserTables />} />
             <Route path="/managerDashboard/booked" element={<BookedSlots/>}/>
             <Route path="/managerDashboard/remaining" element={<RemainingSlots/>}/>
+            <Route path="managerDashboard/settings" element={<CaSettings/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FaCirclePlus } from "react-icons/fa6";
 import SlotsArray from "./SlotsArray";
+import axios from "axios";
 
 export default function TotalSlots({ color }) {
   const [openModal, setOpenModal] = useState(false);
@@ -9,6 +10,26 @@ export default function TotalSlots({ color }) {
   const toogleModal = () => {
     setOpenModal(!openModal);
   };
+
+  const fetchSlots = ()=>{
+    axios({
+      method: "GET",
+      url: 'https://smart-parking-api-3g3e.onrender.com/parking/parkings/getTotalParking',
+      headers: {
+        "content-type": "application/json",
+    }
+    })
+    .then((response)=>{
+      console.log(response)
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
+  }
+
+  useEffect(()=>{
+    fetchSlots();
+  }, [])
 
   return (
     <>

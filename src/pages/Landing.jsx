@@ -129,10 +129,10 @@ export default function Landing() {
           <span className="items-center p-4 text-lg font-semibold text-gray-800">
             our patners location
           </span>
-          <div className="items-center p-4">
+          <div className="items-center p-4 flex">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d30607.79514638295!2d30.066595630129367!3d-1.9550632439832505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1ssp rwanda!5e0!3m2!1sen!2srw!4v1663256798141!5m2!1sen!2srw"
-              width="1500px"
+              width="1100px"
               height="600px"
             />
           </div>
