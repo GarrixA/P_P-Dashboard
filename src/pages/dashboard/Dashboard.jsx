@@ -7,9 +7,9 @@ import CardStats from "../../components/Cards/CardStats.jsx";
 export default function Dashboard() {
   return (
     <>
-    <div className=" relative md:bottom-48">
+    <div className=" relative md:bottom-48 bottom-[32rem]">
             {/* Card stats */}
-            <div className="flex flex-wrap">
+            <div className="lg:flex flex-wrap md:grid md:grid-cols-2">
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
                   statSubtitle="BUILDINGS"
@@ -61,7 +61,7 @@ export default function Dashboard() {
             </div>
           </div>
     
-      <div className="flex flex-wrap relative bottom-12">
+      <div className="flex flex-wrap relative bottom-12 xl:bottom-0">
         <div className="w-full   h-[65vh]    xl:w-8/12 mb-12 xl:mb-0 px-4">
           <CardBarChart />
         </div>

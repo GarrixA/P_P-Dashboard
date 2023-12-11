@@ -10,26 +10,30 @@ export default function TotalSlots({ color }) {
   const toogleModal = () => {
     setOpenModal(!openModal);
   };
+  const [Slots, setSlots] = useState([]);
+  console.log(Slots)
+  let token = localStorage.getItem("token");
+  console.log(token, "my token");
 
-  const fetchSlots = ()=>{
+  const fetchSlots = () => {
     axios({
+      url: "https://smart-parking-api-3g3e.onrender.com/parking/parkings/getTotalParking",
       method: "GET",
-      url: 'https://smart-parking-api-3g3e.onrender.com/parking/parkings/getTotalParking',
       headers: {
-        "content-type": "application/json",
-    }
+        Authorization: `Bearer ${token}`,
+      }
     })
-    .then((response)=>{
-      console.log(response)
-    })
-    .catch((error)=>{
-      console.log(error);
-    })
-  }
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchSlots();
-  }, [])
+  }, []);
 
   return (
     <>

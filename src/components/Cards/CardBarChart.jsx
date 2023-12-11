@@ -100,7 +100,7 @@ export default function CardBarChart() {
   }, []);
   return (
     <>
-      <div className="relative bottom-36 flex flex-col min-w-0 break-words bg-white w-full h-full mb-6 shadow-md rounded">
+      <div className="relative bottom-[28rem] md:bottom-36 md:flex flex-col min-w-0 break-words bg-white w-full h-full mb-6 shadow-md rounded">
         <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
           <div className="flex flex-wrap items-center">
             <div className="relative w-full max-w-full flex-grow flex-1">
@@ -115,7 +115,7 @@ export default function CardBarChart() {
         </div>
         <div className="p-4 flex-auto">
           {/* Chart */}
-          <div className="relative h-full">
+          <div className="relative md:h-full h-64 md:bottom-0 bottom-[-10rem]">
             <canvas id="bar-chart"></canvas>
           </div>
         </div>

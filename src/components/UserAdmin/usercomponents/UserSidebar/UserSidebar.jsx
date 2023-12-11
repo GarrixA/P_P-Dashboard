@@ -5,6 +5,7 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import { BsBuildingsFill } from "react-icons/bs";
 import { MdLogout } from "react-icons/md";
 import { LuParkingCircle } from "react-icons/lu";
+import { FiMenu } from "react-icons/fi";
 
 export default function Sidebar() {
   const [collapseShow, setCollapseShow] = useState(false);
@@ -28,16 +29,17 @@ export default function Sidebar() {
           <div className="flex items-center w-full text-[1rem] uppercase m-4 space-x-2 font-extrabold">
           <img src={park} className="w-1/4 rounded-full"/>
           <h1 className="w-full flex-">Mugisha</h1>
-          </div>         
+          </div>
           <div
             className={
               "md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded " +
               collapseShow
             }
           >
-            <hr className=" md:min-w-full" />
+            
+            <hr className=" md:min-w-full sm:flex hidden" />
 
-            <ul className="md:flex-col md:min-w-full flex flex-col list-none ml-4 p-4">
+            <ul className="  sm:flex-col md:min-w-full sm:flex flex-col list-none ml-4 p-4">
               <li className="items-center flex">
               <LuLayoutDashboard className="text-[1rem]"/>
                 <Link
