@@ -32,7 +32,7 @@ const Login = () => {
           if (response.data.user.role == "admin") {
             navigate("/dashboard/stats");
           } else {
-            navigate("/userdashboard/stats");
+            navigate("/managerdashboard/stats");
           }
         }, 5000);
       })

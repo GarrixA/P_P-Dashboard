@@ -1,13 +1,100 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 import { FaCirclePlus } from "react-icons/fa6";
-import SlotsArray from "./SlotsArray";
+import axios from "axios";
+import { RiDeleteBin7Fill } from "react-icons/ri";
+import { RiEditFill } from "react-icons/ri";
+import { toast, ToastContainer } from "react-toastify";
+import { Navigate } from "react-router-dom";
 
-export default function TotalSlots({ color }) {
-  const [openModal, setOpenModal] = useState(false);
+const TotalSlots = ({ color }) => {
+  const [totalSlots, setTotalSlots] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [openModal, setOpenModal] = useState();
+  const [parkingName,setParkingName]= useState();
+  const [Amount,setAmount]= useState();
+  const fetchtotalSlots = () => {
+    setIsLoading(true);
+    let token = localStorage.getItem("token");
+    console.log(token);
 
-  const toogleModal = () => {
+    axios({
+      method: "GET",
+      url: "https://smart-parking-api-3g3e.onrender.com/parking/parkings/getTotalParking",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        setIsLoading(false);
+        setTotalSlots(response.data.data);
+        console.log(response);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.error("Error fetching total slots:", error);
+      });
+  };
+
+  useEffect(() => {
+    fetchtotalSlots();
+  }, []);
+
+  const toggleModal = () => {
     setOpenModal(!openModal);
+  };
+  // add
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+   
+
+    try {
+      let token=localStorage.getItem("token")
+      console.log(token)
+      const response = await axios({
+        method: "POST",
+        url: 'https://smart-parking-api-3g3e.onrender.com/parking/parkings/addNewParking',
+        data: {
+          parkingName :parkingName ,
+          Amount:Amount,
+
+
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }  
+    });
+    console.log(response.data.data);
+    setIsLoading(true);
+    toast.success("slot-added-successfuly");
+    Navigate(`/managerDashboard/slots`);
+  } catch (error) {
+    console.log(error);
+    toast.error(error.message);
+  }
+}
+// delete
+  const handleDelete = async (id) => {
+    console.log(handleDelete)
+    if (window.confirm("Are you sure you want to delete?")) {
+      let token = localStorage.getItem("token");
+      axios({
+      url: `https://smart-parking-api-3g3e.onrender.com/parking/parkings/deleteParkingSpot/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          toast.success("Booking deleted successfully");
+          console.log(response, "response");
+          // Refresh bookings after deletion
+          fetchBookings();
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+          console.log(error, "error");
+        });
+    }
   };
 
   return (
@@ -31,7 +118,7 @@ export default function TotalSlots({ color }) {
               </h3>
               <div className="bg-[#0C7489] flex items-center gap-2 rounded text-white px-4 py-2 shadow-2xl">
                 <FaCirclePlus className="text-4xl font-bold" />
-                <button className="text-lg font-semibold" onClick={toogleModal}>
+                <button className="text-lg font-semibold" onClick={toggleModal}>
                   Add Slot
                 </button>
               </div>
@@ -42,36 +129,43 @@ export default function TotalSlots({ color }) {
                   <h1 className="m-4 text-center font-extrabold text-3xl mx-2 py-2">
                     Add New Slot
                   </h1>
-                  <div className="flex space-x-6 mx-2 items-center font-semibold ml-10">
+                  <div className="flex space-x-5 mx-4 items-center font-semibold text-black ml-10">
                     <label>Park Id:</label>
                     <input
                       type="text"
                       placeholder="Insert Id eg: M 012 East"
                       className="p-1 mt-2 rounded border w-3/5"
+                      value={parkingName}
+                      onChange={(e) => setParkingName(e.target.value)}
                     />
                   </div>
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10">
+                  <div className="flex space-x-5 mx-4 items-center font-semibold text-black ml-10">
                     <label>Price/Hr</label>
                     <input
-                      type="number"
+                      type="text"
                       placeholder="Insert price eg:1200"
                       className="p-1 mt-2 rounded border w-3/5"
+                      value={Amount}
+                      onChange={(e) => setAmount(e.target.value)}
                     />
                   </div>
 
                   <button
                     className="bg-[#0C7489] w-2/6 mx-24 mt-4 p-1 rounded-md ml-36 font-extrabold text-2xl text-white"
-                    onClick={toogleModal}
+                    onClick={handleSubmit}
                   >
                     Add
                   </button>
+                  <ToastContainer/>
                 </form>
               </div>
             )}
-          </div>
+  </div>
         </div>
-        <div className="block w-full overflow-x-auto">
-          <table className="items-center w-full bg-transparent border-collapse">
+        <div className="bg-white text-black block w-full overflow-x-auto">
+          <table 
+          className="items-center w-full bg-transparent border-collapse"
+          >
             <thead>
               <tr>
                 <th
@@ -114,12 +208,22 @@ export default function TotalSlots({ color }) {
                 >
                   Status
                 </th>
+                <th
+                  className={
+                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                    (color === "light"
+                      ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                      : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                  }
+                >
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
-              {SlotsArray.map((slot, idx) => {
+              {totalSlots.map((item, index) => {
                 return (
-                  <tr key={idx}>
+                  <tr key={index + 1}>
                     <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                       <span
                         className={
@@ -129,19 +233,23 @@ export default function TotalSlots({ color }) {
                             : "text-white")
                         }
                       >
-                        {slot.parkId}
+                        {item.parkingName}
                       </span>
                     </th>
                     <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                      {`${slot.price} Rwf`}
+                      {`${item.Amount} Rwf`}
                     </td>
                     <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                       <div className="flex items-center">
-                        <span className="mr-2">{slot.booked}</span>
+                        <span className="mr-2">{item.booked}</span>
                       </div>
                     </td>
                     <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                      <button>{slot.status}</button>
+                      <button>{item.status}</button>
+                    </td>
+                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    <button><RiEditFill className="text-4xl w-12 h-12" /></button>
+                    <button onClick={() => handleDelete(item._id)}><RiDeleteBin7Fill className="text-4xl w-12 h-12" /></button>
                     </td>
                   </tr>
                 );
@@ -152,12 +260,5 @@ export default function TotalSlots({ color }) {
       </div>
     </>
   );
-}
-
-TotalSlots.defaultProps = {
-  color: "light",
-};
-
-TotalSlots.propTypes = {
-  color: PropTypes.oneOf(["light", "dark"]),
-};
+            };
+export default TotalSlots;
