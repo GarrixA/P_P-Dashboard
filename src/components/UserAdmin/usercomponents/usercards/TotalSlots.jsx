@@ -16,7 +16,6 @@ const TotalSlots = ({ color }) => {
     setIsLoading(true);
     let token = localStorage.getItem("token");
     console.log(token);
-
     axios({
       method: "GET",
       url: "https://smart-parking-api-3g3e.onrender.com/parking/parkings/getTotalParking",
