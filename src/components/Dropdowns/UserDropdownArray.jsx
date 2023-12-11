@@ -9,11 +9,11 @@ const images = [
         image: img1,
         title: "Account",
         description: "User signed up"
-    },{
-        image: img1,
-        title: "Account created",
-        description: "User signed up"
-    }
+    },//{
+    //     image: img1,
+    //     title: "Account created",
+    //     description: "User signed up"
+    // }
 ]
 
 export default images
