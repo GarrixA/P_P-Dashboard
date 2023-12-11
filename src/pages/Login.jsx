@@ -3,6 +3,7 @@ import { FaTwitter, FaInstagram, FaFacebook } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+
 import { Navigate, useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
@@ -31,10 +32,8 @@ const Login = () => {
         setTimeout(() => {
           if (response.data.user.role == "admin") {
             navigate("/dashboard/stats");
-            setIsLoading(false);
           } else {
-            navigate("/managerDashboard/stats");
-            setIsLoading(false);
+            navigate("/userdashboard/stats");
           }
         }, 5000);
       })
@@ -127,7 +126,7 @@ const Login = () => {
           {/* sm:motion-safe:hover:animate-spin */}
           <button
             onClick={handleLogin}
-            className="bg-[#0C7489] rounded-full w-2/4 px-5 text-xl font-bold text-white text-center pb-2 mt-3 ml-8 py-1 "
+            className="bg-[#0C7489] rounded-full w-2/6 px-5 text-xl font-bold text-white text-center pb-2 mt-3 ml-8 py-1 "
           >
             {isLoading ? "Loging in... " : "Login"}
           </button>
