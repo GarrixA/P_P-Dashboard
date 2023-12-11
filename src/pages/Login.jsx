@@ -33,8 +33,7 @@ const Login = () => {
             navigate("/dashboard/stats");
             setIsLoading(false);
           } else {
-            navigate("/managerDashboard/stats");
-            setIsLoading(false);
+            navigate("/managerdashboard/stats");
           }
         }, 5000);
       })
