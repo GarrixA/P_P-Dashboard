@@ -10,8 +10,8 @@ const TotalSlots = ({ color }) => {
   const [totalSlots, setTotalSlots] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [openModal, setOpenModal] = useState();
-  const [parkingName,setParkingName]= useState();
-  const [Amount,setAmount]= useState();
+  const [parkingName, setParkingName] = useState();
+  const [Amount, setAmount] = useState();
   const fetchtotalSlots = () => {
     setIsLoading(true);
     let token = localStorage.getItem("token");
@@ -44,40 +44,37 @@ const TotalSlots = ({ color }) => {
   // add
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
 
     try {
-      let token=localStorage.getItem("token")
-      console.log(token)
+      let token = localStorage.getItem("token");
+      console.log(token);
       const response = await axios({
         method: "POST",
-        url: 'https://smart-parking-api-3g3e.onrender.com/parking/parkings/addNewParking',
+        url: "https://smart-parking-api-3g3e.onrender.com/parking/parkings/addNewParking",
         data: {
-          parkingName :parkingName ,
-          Amount:Amount,
-
-
+          parkingName: parkingName,
+          Amount: Amount,
         },
         headers: {
           Authorization: `Bearer ${token}`,
-        }  
-    });
-    console.log(response.data.data);
-    setIsLoading(true);
-    toast.success("slot-added-successfuly");
-    Navigate(`/managerDashboard/slots`);
-  } catch (error) {
-    console.log(error);
-    toast.error(error.message);
-  }
-}
-// delete
+        },
+      });
+      console.log(response.data.data);
+      setIsLoading(true);
+      toast.success("slot-added-successfuly");
+      Navigate(`/managerDashboard/slots`);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+  // delete
   const handleDelete = async (id) => {
-    console.log(handleDelete)
+    console.log(handleDelete);
     if (window.confirm("Are you sure you want to delete?")) {
       let token = localStorage.getItem("token");
       axios({
-      url: `https://smart-parking-api-3g3e.onrender.com/parking/parkings/deleteParkingSpot/${id}`,
+        url: `https://smart-parking-api-3g3e.onrender.com/parking/parkings/deleteParkingSpot/${id}`,
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -96,25 +93,25 @@ const TotalSlots = ({ color }) => {
     }
   };
 
-  const fetchSlots = ()=>{
+  const fetchSlots = () => {
     axios({
       method: "GET",
-      url: 'https://smart-parking-api-3g3e.onrender.com/parking/parkings/getTotalParking',
+      url: "https://smart-parking-api-3g3e.onrender.com/parking/parkings/getTotalParking",
       headers: {
         "content-type": "application/json",
-    }
+      },
     })
-    .then((response)=>{
-      console.log(response)
-    })
-    .catch((error)=>{
-      console.log(error);
-    })
-  }
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchSlots();
-  }, [])
+  }, []);
 
   return (
     <>
@@ -175,16 +172,14 @@ const TotalSlots = ({ color }) => {
                   >
                     Add
                   </button>
-                  <ToastContainer/>
+                  <ToastContainer />
                 </form>
               </div>
             )}
-  </div>
+          </div>
         </div>
         <div className="bg-white text-black block w-full overflow-x-auto">
-          <table 
-          className="items-center w-full bg-transparent border-collapse"
-          >
+          <table className="items-center w-full bg-transparent border-collapse">
             <thead>
               <tr>
                 <th
@@ -267,8 +262,12 @@ const TotalSlots = ({ color }) => {
                       <button>{item.status}</button>
                     </td>
                     <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    <button><RiEditFill className="text-4xl w-12 h-12" /></button>
-                    <button onClick={() => handleDelete(item._id)}><RiDeleteBin7Fill className="text-4xl w-12 h-12" /></button>
+                      <button>
+                        <RiEditFill className="text-4xl w-12 h-12" />
+                      </button>
+                      <button onClick={() => handleDelete(item._id)}>
+                        <RiDeleteBin7Fill className="text-4xl w-12 h-12" />
+                      </button>
                     </td>
                   </tr>
                 );
@@ -279,5 +278,5 @@ const TotalSlots = ({ color }) => {
       </div>
     </>
   );
-            };
+};
 export default TotalSlots;
