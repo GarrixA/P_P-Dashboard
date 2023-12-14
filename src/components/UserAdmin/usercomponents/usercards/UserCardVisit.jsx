@@ -1,7 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import UserCard from "./UserCardArray";
+import axios from "axios";
+import { useEffect } from "react";
+import { ToastContainer,toast } from "react-toastify";
 
 export default function UserCardVisit() {
+
+  const [users, setUsers] = useState ([]);
+ 
+//fetch users //
+
+
+   const fetchUsers = () => {
+     let token = localStorage.getItem("token");
+ 
+
+     axios({
+       url: "https://smart-parking-api-3g3e.onrender.com/parking/users/getusers",
+       method: "GET",
+       headers: {
+         Authorization: `Bearer ${token}`,
+       },
+     }).then((response) => {
+       console.log(response.data);
+       setUsers(response.data)
+
+     });
+   };
+   useEffect(() => {
+     fetchUsers();
+   }, []);
+
+
+
+
+
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
@@ -28,41 +61,49 @@ export default function UserCardVisit() {
             <thead>
               <tr>
                 <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                  User's name
+                  fullNames
                 </th>
                 <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                  Total books
+                  email
                 </th>
                 <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                  Complete
+                  location
                 </th>
                 <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                 Incomplete
+                 role
                 </th>
+                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                  phoneNo
+                </th>
+                {/* <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                  Incomplete
+                </th> */}
               </tr>
             </thead>
             <tbody>
-              {
-                UserCard.map((card, idx)=>{
-                  return<tr key={idx}>
-                          <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                            {`${card.firstName} ${card.lastName}`}
-                          </th>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          {card.books}
-                          </td>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            {card.complete}
-                          </td>
-                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-                            {card.incomplete}
-                          </td>
-                      </tr>
-                })
-              }
-              
-              
+              {users.map((items, idx) => {
+                return (
+                  <tr key={idx}>
+                    <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                      {`${items.fullNames}`}
+                    </th>
+                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                      {items.email}
+                    </td>
+                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                      {items.location}
+                    </td>
+                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                      <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
+                      {items.role}
+                    </td>
+                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                      <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
+                      {items.phoneNo}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
