@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import park from "./prof.png";
@@ -23,7 +24,7 @@ export default function Sidebar() {
   };
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("../../../../../");
+    navigate("/");
   };
 
   const toggleModal = () => {
@@ -154,3 +155,4 @@ export default function Sidebar() {
     </>
   );
 }
+

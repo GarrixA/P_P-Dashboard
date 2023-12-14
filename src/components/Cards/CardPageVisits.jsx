@@ -4,11 +4,13 @@ import CardPageArray from "./CardPageArra";
 import { FaPen } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
+import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 
 import "react-toastify/dist/ReactToastify.css";
 
 import axios from "axios";
+import { CirclesWithBar } from "react-loader-spinner";
 import Editbuilding from "./Editbuilding";
 
 const CardPageVisits = () => {
@@ -26,97 +28,166 @@ const CardPageVisits = () => {
   const [Floors, setFloors] = useState();
   const [Description, setDescription] = useState("");
   const [managerEmail, setManagerEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  // properties of inputs building//
+    // properties of inputs building//
 
-  const [openModal, setopenModal] = useState(false);
-  const toggleModal = () => {
-    setopenModal(!openModal);
-  };
-
-  const [open, setOpen] = useState();
-  const toggleOpen = () => {
-    setOpen(!open);
-  };
-
-  const [edit, setEdit] = useState(false);
-  const toggleEdit = () => {
-    setEdit(!edit);
-  };
-
-  //fetch building//
-
-  const fetchBuildings = () => {
-    let token = localStorage.getItem("token");
-    // console.log("Token:", token);
-    console.log(token);
-
-    axios({
-      url: "https://smart-parking-api-3g3e.onrender.com/parking/buildings/getAllBuildingData",
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((response) => {
-      console.log(response.data.allBuildings);
-
-      if (response.data) {
-        toast.success(response.data.message);
-        setBuildings(response.data.allBuildings);
-      } else {
-        console.error("Unexpected response format:", response);
-      }
-    });
-  };
-  useEffect(() => {
-    fetchBuildings();
-  }, []);
-
-  // fetch building is ended from here//
-
-  // Addbuilding //
-
-  const Addnewbuilging = async () => {
-    let token = localStorage.getItem("token");
+    const [openModal, setopenModal] = useState(false);
+    const toggleModal = () => {
+      setopenModal(!openModal);
+    };
   
-    // Create a FormData object to handle file upload
-    const formData = new FormData();
-    formData.append("buildingName", buildingName);
-    formData.append("Address", location);
-    formData.append("District", District);
-    formData.append("Sector", Sector);
-    formData.append("Street", Street);
-    formData.append("Longitude", Longitude);
-    formData.append("Latitude", Latitude);
-    formData.append("Price", Price);
-    formData.append("profilePicture", profiPicture);
-    formData.append("Floors", Floors);
-    formData.append("Description", Description);
-    formData.append("managerEmail", managerEmail);
-
-    try {
-      const response = await axios.post(
-        "https://smart-parking-api-3g3e.onrender.com/parking/buildings/addNewBuilding",
-        formData,
-        {
+    const [open, setOpen] = useState();
+    const toggleOpen = () => {
+      setOpen(!open);
+    };
+  
+    const [edit, setEdit] = useState(false);
+    const toggleEdit = () => {
+      setEdit(!edit);
+    };
+  
+    //fetch building//
+  
+    const fetchBuildings = () => {
+      setIsLoading(true)
+      let token = localStorage.getItem("token");
+      // console.log("Token:", token);
+      console.log(token);
+  
+      axios({
+        url: "https://smart-parking-api-3g3e.onrender.com/parking/buildings/getAllBuildingData",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((response) => {
+        console.log(response.data.allBuildings);
+        setIsLoading(false)
+  
+        if (response.data) {
+          toast.success(response.data.message);
+          setBuildings(response.data.allBuildings);
+        } else {
+          console.error("Unexpected response format:", response);
+        }
+      });
+    };
+    useEffect(() => {
+      fetchBuildings();
+    }, []);
+  
+    // fetch building is ended from here//
+  
+    // Addbuilding //
+  
+    const Addnewbuilging = async () => {
+      let token = localStorage.getItem("token");
+  
+      // Create a FormData object to handle file upload
+      const formData = new FormData();
+      formData.append("buildingName", buildingName);
+      formData.append("Address", location);
+      formData.append("District", District);
+      formData.append("Sector", Sector);
+      formData.append("Street", Street);
+      formData.append("Longitude", Longitude);
+      formData.append("Latitude", Latitude);
+      formData.append("Price", Price);
+      formData.append("profilePicture", profiPicture);
+      formData.append("Floors", Floors);
+      formData.append("Description", Description);
+      formData.append("managerEmail", managerEmail);
+  
+      try {
+        const response = await axios.post(
+          "https://smart-parking-api-3g3e.onrender.com/parking/buildings/addNewBuilding",
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+  
+        toast.success(response.data.message);
+      } catch (error) {
+        console.error(error);
+  
+        if (error.response) {
+          toast.error(`Error: ${error.response.data.message}`);
+        } else if (error.request) {
+          toast.error("No response received from the server");
+        } else {
+          toast.error("Something went wrong");
+        }
+      }
+    };
+  
+    //fetch addnew building is ended from here//
+  
+    // Editing building //
+  
+    const EditBuildings = async (id, allBuildings) => {
+      try {
+        let token = localStorage.getItem("token");
+  
+        if (!buildingData) {
+          throw new Error("Building data is missing");
+        }
+  
+        const formData = new FormData();
+  
+        formData.append("buildingName", buildingName);
+        formData.append("Address", location);
+        formData.append("District", District);
+        formData.append("Sector", Sector);
+        formData.append("Street", Street);
+        formData.append("Longitude", Longitude);
+        formData.append("Latitude", Latitude);
+        formData.append("Price", Price);
+        formData.append("profilePicture", profiPicture);
+        formData.append("Floors", Floors);
+        formData.append("Description", Description);
+        formData.append("managerEmail", managerEmail);
+  
+        const response = await axios.post(
+          `https:/smart-parking-api-3g3e.onrender.com/parking/buildings/updateBuilding/${id}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data", // Set content type for FormData
+            },
+          }
+        );
+  
+        toast.success(response.data.message);
+      } catch (error) {
+        console.error(error);
+  
+        if (error.response) {
+          toast.error(`Error: ${error.response.data.message}`);
+        } else if (error.request) {
+          toast.error("No response received from the server");
+        } else {
+          toast.error("Something went wrong");
+        }
+      }
+    };
+  
+    //deleting building
+  
+    const handleDeleteBuildings = async (id) => {
+      if (window.confirm("Are you sure you want to delete this building?")) {
+        let token = localStorage.getItem("token");
+        axios({
+          url: `https://smart-parking-api-3g3e.onrender.com/parking/buildings/deleteBuilding/${id}`,
+          method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
           },
-        }
-      );
-
-      toast.success(response.data.message);
-    } catch (error) {
-      console.error(error);
-
-      if (error.response) {
-        toast.error(`Error: ${error.response.data.message}`);
-      } else if (error.request) {
-        toast.error("No response received from the server");
-      } else {
-        toast.error("Something went wrong");
-      }
     }
   };
 
@@ -141,15 +212,92 @@ const CardPageVisits = () => {
           toast.success("Building deleted successfully");
           console.log(response, "Response");
         })
-        .catch((error) => {
-          toast.error(error.response.data.message);
-          console.log(error, "Error");
-        });
-    }
-  };
+          .then((response) => {
+            toast.success("Building deleted successfully");
+            console.log(response, "Response");
+          })
+          .catch((error) => {
+            toast.error(error.response.data.message);
+            console.log(error, "Error");
+          });
+      }
+    };
+  const [pageNumber, setPageNumber] = useState(0);
+  const buildingsPerPage = 4;
+  const pageCount = Math.ceil(buildings.length / buildingsPerPage);
+  const pagesVisited = pageNumber * buildingsPerPage;
+  const displaybuildings = buildings
+    .slice(pagesVisited, pagesVisited + buildingsPerPage)
+    .map((items, index) => {
+      return (
+        <tr
+          key={index + 1}
+          className="hover:bg-slate-400 hover:bg-opacity-50 text-xl font-semibold"
+        >
+          {/*
+        
+            
+         */}
+
+          <td
+            className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+            onClick={toggleOpen}
+          >
+            {index}
+          </td>
+          <td
+            className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+            onClick={toggleOpen}
+          >
+            {items.buildingName}
+          </td>
+          <td
+            className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+            onClick={toggleOpen}
+          >
+            <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
+            {items.Street}
+          </td>
+          <td
+            className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+            onClick={toggleOpen}
+          >
+            <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
+            {items.managerEmail}
+          </td>
+          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 flex space-x-3">
+            <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
+            <span>
+              <FaPen onClick={toggleEdit} id={items._id} />
+            </span>
+            <span className=" text-red-600">
+              <FaTrash
+                onClick={() => handleDeleteBuildings(items._id)}
+              />
+              <ToastContainer />
+            </span>
+          </td>
+        </tr>
+      );
+    })
+    const changePage=({ selected })=>{
+      setPageNumber(selected)
+    };
 
   return (
     <>
+     {isLoading ? (
+      <CirclesWithBar
+  height="300"
+  width="1000"
+  radius="9"
+  color="#7B3F00"
+  ariaLabel="loading"
+  className="mx-auto absolute top-0 right-0 mb-100"
+/>
+
+      ) : (
+        <>
       <div className="relative bottom-36 flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
         <div className="rounded-t mb-0 px-4 py-3 border-0">
           <div className="flex flex-wrap items-center">
@@ -356,67 +504,27 @@ const CardPageVisits = () => {
               </tr>
             </thead>
             <tbody className="cursor-pointer shadow-lg">
-              {buildings &&
-                buildings.map((items, idx) => {
-                  return (
-                    <tr
-                      key={idx + 1}
-                      className="hover:bg-slate-400 hover:bg-opacity-50 text-xl font-semibold"
-                    >
-                      {/*
-                      
-                          
-                       */}
+            {displaybuildings}
 
-                      <td
-                        className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-                        onClick={toggleOpen}
-                      >
-                        {idx}
-                      </td>
-                      <td
-                        className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-                        onClick={toggleOpen}
-                      >
-                        {items.buildingName}
-                      </td>
-                      <td
-                        className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-                        onClick={toggleOpen}
-                      >
-                        <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-                        {items.Street}
-                      </td>
-                      <td
-                        className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-                        onClick={toggleOpen}
-                      >
-                        <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-                        {items.managerEmail}
-                      </td>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 flex space-x-3">
-                        <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-                        <span>
-                          <Link to={`/dashboard/Editbuilding/${items._id}`}>
-                            <FaPen />
-                          </Link>
-                        </span>
-                        <span className=" text-red-600">
-                          <FaTrash
-                            onClick={() => handleDeleteBuildings(items._id)}
-                          />
-                          <ToastContainer />
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
             </tbody>
            
           </table>
+                  <ReactPaginate
+      previousLabel="Previous"
+      nextLabel="Next"
+      pageCount={pageCount}
+      onPageChange={changePage}
+      containerClassName="flex justify-center mt-4"
+      previousLinkClassName="bg-blue-500 px-4 py-2 text-white  border rounded-md border-black-400 mr-2 hover:bg-gray-200 cursor-pointer"
+      nextLinkClassName="bg-blue-500 px-4 py-2 text-white border rounded-md border-black-400 ml-2 hover:bg-gray-200 cursor-pointer"
+      disabledClassName="text-gray-400 cursor-not-allowed"
+      activeClassName="bg-blue-700 text-white rounded-md p-2 cursor-pointer"
+    />
         </div>
       </div>
     </>
+      )}
+      </>
   );
 };
 export default CardPageVisits;
