@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @media (min-width: 768){
     #loginAnim{
         display: none;

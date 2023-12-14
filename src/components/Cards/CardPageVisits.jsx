@@ -5,12 +5,13 @@ import { FaPen } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import ReactPaginate from "react-paginate";
-
+import { Link } from "react-router-dom";
 
 import "react-toastify/dist/ReactToastify.css";
 
 import axios from "axios";
 import { CirclesWithBar } from "react-loader-spinner";
+import Editbuilding from "./Editbuilding";
 
 const CardPageVisits = () => {
   const [buildings, setBuildings] = useState([]);
@@ -187,6 +188,29 @@ const CardPageVisits = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+    }
+  };
+
+  //fetch addnew building is ended from here//
+
+  // update building //
+
+    
+  //deleting building
+
+  const handleDeleteBuildings = async (id) => {
+    if (window.confirm("Are you sure you want to delete this building?")) {
+      let token = localStorage.getItem("token");
+      axios({
+        url: `https://smart-parking-api-3g3e.onrender.com/parking/buildings/deleteBuilding/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          toast.success("Building deleted successfully");
+          console.log(response, "Response");
         })
           .then((response) => {
             toast.success("Building deleted successfully");
@@ -474,162 +498,16 @@ const CardPageVisits = () => {
                 <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                   Action
                 </th>
+                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody className="cursor-pointer shadow-lg">
             {displaybuildings}
+
             </tbody>
-            {edit && (
-              <div className="absolute top-0 left-0 flex justify-center bg-[#252525]bg-opacity-10 backdrop-blur-sm p-4 w-full h-screen">
-                <form className="flex flex-col w-3/5 h-3/15 bg-white shadow-2xl mt-42 text-[.9rem]">
-                  <h1 className="m-4 text-center font-extrabold text-[1rem] mx-2 py-2">
-                    let's Update some
-                  </h1>
-                  {/* <div className="flex space-x-6 mx-2 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Building Id:</label>
-                    <input
-                      type="text"
-                      placeholder="Insert Id eg: M 012 East"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={id}
-                      onChange={(e) => setBuildingId(e.target.value)}
-                    />
-                  </div> */}
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Building Name</label>
-                    <input
-                      type="text"
-                      placeholder="Makuza Peace Plaza"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={buildingName}
-                      onChange={(e) => setBuildingName(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>District</label>
-                    <input
-                      type="text"
-                      name="required"
-                      placeholder="district"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={District}
-                      onChange={(e) => setDistrict(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Sector</label>
-                    <input
-                      type="text"
-                      name="required"
-                      placeholder="sector"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={Sector}
-                      onChange={(e) => setSector(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Street</label>
-                    <input
-                      type="text"
-                      name="required"
-                      placeholder="street"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={Street}
-                      onChange={(e) => setStreet(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Longitude</label>
-                    <input
-                      type="text"
-                      placeholder="longitude"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={Longitude}
-                      onChange={(e) => setLongitude(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Latitude</label>
-                    <input
-                      type="text"
-                      placeholder="latitude"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={Latitude}
-                      onChange={(e) => setLatitude(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Price</label>
-                    <input
-                      type="number"
-                      placeholder="price"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={Price}
-                      onChange={(e) => setPrice(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>profilePicture</label>
-                    <input
-                      type="file"
-                      onChange={(e) => setProfilePictue(e.target.files[0])}
-                      className="p-1 mt-2 rounded border w-3/5"
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Floors</label>
-                    <input
-                      type="text"
-                      placeholder="floors"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={Floors}
-                      onChange={(e) => setFloors(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Description</label>
-                    <input
-                      type="text"
-                      placeholder="description"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={Description}
-                      onChange={(e) => setDescription(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>managerEmail</label>
-                    <input
-                      type="text"
-                      placeholder="Mugisha"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={managerEmail}
-                      onChange={(e) => setManagerEmail(e.target.value)}
-                    />
-                  </div>
-                  <div className="flex justify-center">
-                    <button
-                      className="bg-[#0C7489] w-2/6 mt-4 p-1 rounded-md font-extrabold text-2xl text-white"
-                      onClick={async (e) => {
-                        e.preventDefault();
-                        await EditBuildings();
-                      }}
-                    >
-                      Update
-                    </button>
-                  </div>
-                </form>
-              </div>
-            )}
+           
           </table>
                   <ReactPaginate
       previousLabel="Previous"
