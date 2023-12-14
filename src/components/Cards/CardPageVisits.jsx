@@ -4,10 +4,12 @@ import CardPageArray from "./CardPageArra";
 import { FaPen } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 import "react-toastify/dist/ReactToastify.css";
 
 import axios from "axios";
+import Editbuilding from "./Editbuilding";
 
 const CardPageVisits = () => {
   const [buildings, setBuildings] = useState([]);
@@ -23,7 +25,6 @@ const CardPageVisits = () => {
   const [profiPicture, setProfilePictue] = useState();
   const [Floors, setFloors] = useState();
   const [Description, setDescription] = useState("");
-
   const [managerEmail, setManagerEmail] = useState("");
 
   // properties of inputs building//
@@ -121,61 +122,9 @@ const CardPageVisits = () => {
 
   //fetch addnew building is ended from here//
 
-  // Editing building //
+  // update building //
 
-    const EditBuildings = async (id,allBuildings
-) => {
-      try {
-        let token = localStorage.getItem("token");
-         
-          if (!buildingData) {
-      throw new Error("Building data is missing");
-    }
-
-
-
-        const formData = new FormData();
-
-           formData.append("buildingName", buildingName);
-           formData.append("Address", location);
-           formData.append("District", District);
-           formData.append("Sector", Sector);
-           formData.append("Street", Street);
-           formData.append("Longitude", Longitude);
-           formData.append("Latitude", Latitude);
-           formData.append("Price", Price);
-           formData.append("profilePicture", profiPicture);
-           formData.append("Floors", Floors);
-           formData.append("Description", Description);
-           formData.append("managerEmail", managerEmail);
-
-
-        const response = await axios.post(
-          `https:/smart-parking-api-3g3e.onrender.com/parking/buildings/updateBuilding/${id}`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data", // Set content type for FormData
-            },
-          }
-        );
-
-        toast.success(response.data.message);
-      } catch (error) {
-        console.error(error);
-
-        if (error.response) {
-          toast.error(`Error: ${error.response.data.message}`);
-        } else if (error.request) {
-          toast.error("No response received from the server");
-        } else {
-          toast.error("Something went wrong");
-        }
-      }
-    };
-
-
+    
   //deleting building
 
   const handleDeleteBuildings = async (id) => {
@@ -448,7 +397,9 @@ const CardPageVisits = () => {
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 flex space-x-3">
                         <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
                         <span>
-                        <FaPen onClick={toggleEdit} id={items._id} />
+                          <Link to={`/dashboard/Editbuilding/${items._id}`}>
+                            <FaPen />
+                          </Link>
                         </span>
                         <span className=" text-red-600">
                           <FaTrash
@@ -461,157 +412,7 @@ const CardPageVisits = () => {
                   );
                 })}
             </tbody>
-            {edit && (
-              <div className="absolute top-0 left-0 flex justify-center bg-[#252525]bg-opacity-10 backdrop-blur-sm p-4 w-full h-screen">
-                <form className="flex flex-col w-3/5 h-3/15 bg-white shadow-2xl mt-42 text-[.9rem]">
-                  <h1 className="m-4 text-center font-extrabold text-[1rem] mx-2 py-2">
-                    let's Update some
-                  </h1>
-                  {/* <div className="flex space-x-6 mx-2 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Building Id:</label>
-                    <input
-                      type="text"
-                      placeholder="Insert Id eg: M 012 East"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={id}
-                      onChange={(e) => setBuildingId(e.target.value)}
-                    />
-                  </div> */}
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Building Name</label>
-                    <input
-                      type="text"
-                      placeholder="Makuza Peace Plaza"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={buildingName}
-                      onChange={(e) => setBuildingName(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>District</label>
-                    <input
-                      type="text"
-                      name="required"
-                      placeholder="district"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={District}
-                      onChange={(e) => setDistrict(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Sector</label>
-                    <input
-                      type="text"
-                      name="required"
-                      placeholder="sector"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={Sector}
-                      onChange={(e) => setSector(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Street</label>
-                    <input
-                      type="text"
-                      name="required"
-                      placeholder="street"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={Street}
-                      onChange={(e) => setStreet(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Longitude</label>
-                    <input
-                      type="text"
-                      placeholder="longitude"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={Longitude}
-                      onChange={(e) => setLongitude(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Latitude</label>
-                    <input
-                      type="text"
-                      placeholder="latitude"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={Latitude}
-                      onChange={(e) => setLatitude(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Price</label>
-                    <input
-                      type="number"
-                      placeholder="price"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={Price}
-                      onChange={(e) => setPrice(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>profilePicture</label>
-                    <input
-                      type="file"
-                      onChange={(e) => setProfilePictue(e.target.files[0])}
-                      className="p-1 mt-2 rounded border w-3/5"
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Floors</label>
-                    <input
-                      type="text"
-                      placeholder="floors"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={Floors}
-                      onChange={(e) => setFloors(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Description</label>
-                    <input
-                      type="text"
-                      placeholder="description"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={Description}
-                      onChange={(e) => setDescription(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>managerEmail</label>
-                    <input
-                      type="text"
-                      placeholder="Mugisha"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={managerEmail}
-                      onChange={(e) => setManagerEmail(e.target.value)}
-                    />
-                  </div>
-                  <div className="flex justify-center">
-                    <button
-                      className="bg-[#0C7489] w-2/6 mt-4 p-1 rounded-md font-extrabold text-2xl text-white"
-                      onClick={async (e) => {
-                        e.preventDefault();
-                        await EditBuildings();
-                      }}
-                    >
-                      Update
-                    </button>
-                  </div>
-                </form>
-              </div>
-            )}
+           
           </table>
         </div>
       </div>

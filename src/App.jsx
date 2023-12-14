@@ -17,7 +17,11 @@ import BookedSlots from "./components/UserAdmin/usercomponents/usercards/BookedS
 import RemainingSlots from "./components/UserAdmin/usercomponents/usercards/RemainingSlots.jsx";
 import TotalSlots from "./components/UserAdmin/usercomponents/usercards/TotalSlots.jsx";
 import CaSettings from "./components/UserAdmin/usercomponents/usercards/CaSettings.jsx";
+
+import Editbuilding from "./components/Cards/Editbuilding.jsx";
+
 import Floors from "./components/UserAdmin/usercomponents/usercards/Floors.jsx";
+
 
 export default function App() {
   return (
@@ -26,8 +30,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomeLayout />}>
             <Route path="" element={<LandingPage />} />
-            <Route path="login" element={<Login/>} />
-            <Route path="sign" element={<Signup/>} />
+            <Route path="login" element={<Login />} />
+            <Route path="sign" element={<Signup />} />
           </Route>
           <Route path="dashboard" element={<DashboardLayout />}>
             <Route path="" element={<Navigate to={"/dashboard/stats"} />} />
@@ -35,6 +39,10 @@ export default function App() {
             <Route path="/dashboard/maps" element={<Maps />} />
             <Route path="/dashboard/settings" element={<Settings />} />
             <Route path="/dashboard/tables" element={<Tables />} />
+            <Route
+              path="Editbuilding/:id"
+              element={<Editbuilding />}
+            />
           </Route>
           <Route path="managerDashboard" element={<UserDashboardLayout />}>
             <Route path="" element={<Navigate to={"/managerDashboard/stats"} />} />
