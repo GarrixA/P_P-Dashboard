@@ -23,7 +23,7 @@ export default function Sidebar() {
   };
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("../../../../../");
+    navigate("/");
   };
 
   const toggleModal = () => {

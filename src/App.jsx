@@ -43,7 +43,8 @@ export default function App() {
             <Route path="/managerDashboard/tables" element={<UserTables />} />
             <Route path="/managerDashboard/booked" element={<BookedSlots/>}/>
             <Route path="/managerDashboard/remaining" element={<RemainingSlots/>}/>
-            <Route path="managerDashboard/settings" element={<CaSettings/>}/>
+            <Route path="/managerDashboard/settings" element={<CaSettings/>}/>
+            
           </Route>
         </Routes>
       </BrowserRouter>

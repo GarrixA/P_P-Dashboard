@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 import { Navigate, useNavigate, Link } from "react-router-dom";
+import { CirclesWithBar } from "react-loader-spinner";
 
 const Login = () => {
   const [passWord, setPassword] = useState("");
@@ -25,10 +26,10 @@ const Login = () => {
       },
     })
       .then((response) => {
+        setIsLoading(false)
         console.log(response, "response");
         localStorage.setItem("token", response.data.access_token);
-        alert("Login succesfull");
-        // navigate("../dashboard");
+        toast.success("login-successfuly");
         setTimeout(() => {
           if (response.data.user.role == "admin") {
             navigate("/dashboard/stats");
@@ -128,8 +129,20 @@ const Login = () => {
             onClick={handleLogin}
             className="bg-[#0C7489] rounded-full w-2/6 px-5 text-xl font-bold text-white text-center pb-2 mt-3 ml-8 py-1 "
           >
-            {isLoading ? "Loging in... " : "Login"}
-          </button>
+            {isLoading?
+              <CirclesWithBar
+              class="mx-auto mr-20 bg-white"
+              height="50"
+              width="50"
+              radius="9"
+              color="white"
+              ariaLabel="loading"
+              wrapperStyle
+              wrapperClass
+            />
+             :"login"}
+                        </button>
+          <ToastContainer/>
         </div>
       </div>
       <div id="footer" className="footer  bg-[#0C7489] text-white py-8">
