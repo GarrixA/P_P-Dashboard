@@ -23,7 +23,7 @@ export default function Sidebar() {
   };
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/");
+    navigate("../../../../../");
   };
 
   const toggleModal = () => {
@@ -37,7 +37,6 @@ export default function Sidebar() {
             <img src={park} className="w-[12%] md:w-1/4 rounded-full" />
             <h1 className="w-full flex-">Admin</h1>
             <span>
-              {/* <h1>hdhdhd</h1> */}
               <IoNotifications
                 onClick={toggleNotification}
                 className="cursor-pointer text-black md:hidden inline-block text-[2rem] sm:text-[3rem] sm:absolute mr-10 sm:left-[75%] sm:bottom-8 w-10 sm:w-12"

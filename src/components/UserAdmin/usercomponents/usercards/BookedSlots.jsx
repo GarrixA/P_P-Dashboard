@@ -1,5 +1,8 @@
+/* eslint-disable no-unused-vars */
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+// eslint-disable-next-line no-unused-vars
 import { FaCirclePlus } from "react-icons/fa6";
 import SlotsArray from "./SlotsArray";
 

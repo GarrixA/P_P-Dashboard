@@ -18,7 +18,10 @@ import RemainingSlots from "./components/UserAdmin/usercomponents/usercards/Rema
 import TotalSlots from "./components/UserAdmin/usercomponents/usercards/TotalSlots.jsx";
 import CaSettings from "./components/UserAdmin/usercomponents/usercards/CaSettings.jsx";
 import Editbuilding from "./components/Cards/Editbuilding.jsx";
-import Floors from "./components/UserAdmin/usercomponents/usercards/Floors.jsx";
+import AddFloor from "./components/UserAdmin/usercomponents/UserSidebar/AddFloor.jsx";
+import AllFloors from "./components/UserAdmin/usercomponents/usercards/AllFloors.jsx";
+import { EditFloor } from "./components/UserAdmin/usercomponents/UserSidebar/EditFloor.jsx";
+import AddSlots from "./components/UserAdmin/usercomponents/crudSlots/AddSlots.jsx";
 
 export default function App() {
   return (
@@ -44,14 +47,16 @@ export default function App() {
           <Route path="managerDashboard" element={<UserDashboardLayout />}>
             <Route path="" element={<Navigate to={"/managerDashboard/stats"} />} />
             <Route path="/managerDashboard/stats" index element={<ManagerDashboard />} />
-            <Route path="/managerDashboard/slots" index element={<TotalSlots />} />
+            <Route path="/managerDashboard/slots/:id" index element={<TotalSlots />} />
             <Route path="/managerDashboard/UserSettings" element={<UserSettings />} />
             <Route path="/managerDashboard/tables" element={<UserTables />} />
-            <Route path="/managerDashboard/booked" element={<BookedSlots/>}/>
-            <Route path="/managerDashboard/remaining" element={<RemainingSlots/>}/>
+            <Route path="/managerDashboard/booked/:id" element={<BookedSlots/>}/>
+            <Route path="/managerDashboard/remaining/:id" element={<RemainingSlots/>}/>
             <Route path="/managerDashboard/settings" element={<CaSettings/>}/>
-            <Route path="/managerDashboard/floors" element={<Floors/>}/>
-            
+            <Route path="/managerDashboard/addfloor" element={<AddFloor/>}/>
+            <Route path="/managerDashboard/allfloors" element={<AllFloors/>}/>
+            <Route path="/managerDashboard/editFloor/:id" element={<EditFloor/>}/>
+            <Route path="/managerDashboard/addslots/:id" element={<AddSlots/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
