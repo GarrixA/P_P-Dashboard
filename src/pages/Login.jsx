@@ -1,11 +1,12 @@
+/* eslint-disable no-undef */
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { FaTwitter, FaInstagram, FaFacebook } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
-import { Navigate, useNavigate, Link } from "react-router-dom";
-import { CirclesWithBar } from "react-loader-spinner";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const [passWord, setPassword] = useState("");
@@ -26,14 +27,17 @@ const Login = () => {
       },
     })
       .then((response) => {
-        setIsLoading(false)
         console.log(response, "response");
         localStorage.setItem("token", response.data.access_token);
-        toast.success("login-successfuly");
+        alert("Login succesfull");
+        setIsLoading(false)
+        // navigate("../dashboard");
         setTimeout(() => {
           if (response.data.user.role == "admin") {
+            setIsLoading(false)
             navigate("/dashboard/stats");
           } else {
+            setIsLoading(false)
             navigate("/managerdashboard/stats");
           }
         }, 5000);
@@ -41,6 +45,7 @@ const Login = () => {
       .catch((error) => {
         console.log(error);
         alert("An error happened" + error.meessage);
+        setIsLoading(false)
       });
     setEmail("");
     setPassword("");
@@ -129,20 +134,8 @@ const Login = () => {
             onClick={handleLogin}
             className="bg-[#0C7489] rounded-full w-2/6 px-5 text-xl font-bold text-white text-center pb-2 mt-3 ml-8 py-1 "
           >
-            {isLoading?
-              <CirclesWithBar
-              class="mx-auto mr-20 bg-white"
-              height="50"
-              width="50"
-              radius="9"
-              color="white"
-              ariaLabel="loading"
-              wrapperStyle
-              wrapperClass
-            />
-             :"login"}
-                        </button>
-          <ToastContainer/>
+            {isLoading ? "Loging in... " : "Login"}
+          </button>
         </div>
       </div>
       <div id="footer" className="footer  bg-[#0C7489] text-white py-8">

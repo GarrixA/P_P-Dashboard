@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import playstore from "../assets/playstore.png";
 import appstore from "../assets/appstore.png";
@@ -20,15 +22,15 @@ export default function Landing() {
 
   return (
     <div className="">
-      <div class="flex flex-col md:flex-row justify-between items-center p-4">
-        <div class="flex justify-between  items-center w-full md:w-1/5 ">
-          <div class="landing-page-logo mb-4 md:mb-0 flex items-center justify-between flex w-full md:justify-start">
+      <div className="flex flex-col md:flex-row justify-between items-center p-4">
+        <div className="flex justify-between  items-center w-full md:w-1/5 ">
+          <div className="landing-page-logo mb-4 md:mb-0 flex items-center justify-between flex w-full md:justify-start">
             <img
               src="https://img.freepik.com/premium-wektory/przypnij-szablon-logo-parkingu-wektor-premium_316488-5081.jpg?w=2000"
-              class="w-32"
+              className="w-32"
               alt="Logo"
             />
-            <span class="ml-2 font-bold text-start float-left w-full">
+            <span className="ml-2 font-bold text-start float-left w-full">
               smartcarparking
             </span>
           </div>
@@ -38,31 +40,31 @@ export default function Landing() {
           />
         </div>
 
-        <div class="hidden md:flex items-center md:mr-10 ">
-          <div class="text-black">
+        <div className="hidden md:flex items-center md:mr-10 ">
+          <div className="text-black">
             <a
               href="#"
               onClick={() => scrollToSection("about-us")}
-              class="block md:inline-block mr-4"
+              className="block md:inline-block mr-4"
             >
               About us
             </a>
             <a
               href="#"
               onClick={() => scrollToSection("contact-us")}
-              class="block md:inline-block mr-4"
+              className="block md:inline-block mr-4"
             >
               Contact us
             </a>
             <a
               href="#"
               onClick={() => scrollToSection("location")}
-              class="block md:inline-block mr-4"
+              className="block md:inline-block mr-4"
             >
               Location
             </a>
             <Link to={"login"}>
-              <a href="#" class="block md:inline-block">
+              <a href="#" className="block md:inline-block">
                 Login
               </a>
             </Link>
@@ -70,31 +72,39 @@ export default function Landing() {
         </div>
       </div>
       {openModal && (
-        <div class="md:hidden flex text-2xl font-semibold md:mr-10 bg-white absolute w-full h-full">
-          <div class="text-black flex flex-col  w-full m-5 space-y-2">
+        <div className="md:hidden flex text-2xl font-semibold md:mr-10 bg-white absolute w-full h-full">
+          <div className="text-black flex flex-col  w-full m-5 space-y-2">
+            <span onClick={toggleModal}>
             <a
               href="#"
               onClick={() => scrollToSection("about-us")}
-              class="block md:inline-block mr-4"
+              className="block md:inline-block mr-4"
             >
               About us
             </a>
+            </span>
+
+            <span onClick={toggleModal}>
             <a
               href="#"
               onClick={() => scrollToSection("contact-us")}
-              class="block md:inline-block mr-4"
+              className="block md:inline-block mr-4"
             >
               Contact us
             </a>
+            </span>
+
+            <span onClick={toggleModal}>
             <a
               href="#"
               onClick={() => scrollToSection("location")}
-              class="block md:inline-block mr-4"
+              className="block md:inline-block mr-4"
             >
               Location
             </a>
+            </span>
             <Link to={"login"}>
-              <a href="#" class="block md:inline-block">
+              <a href="#" className="block md:inline-block">
                 Login
               </a>
             </Link>
@@ -139,24 +149,24 @@ export default function Landing() {
         </div>
       </div>
 
-      <div class="flex flex-col md:flex-row justify-between items-center p-4" />
-      <div class="flex-shrink-0 mb-4 md:mb-0 w-full md:w-1/2" />
+      <div className="flex flex-col md:flex-row justify-between items-center p-4" />
+      <div className="flex-shrink-0 mb-4 md:mb-0 w-full md:w-1/2" />
 
-      <div class="flex flex-col md:flex-row items-center self-center justify-center space-x-0 md:space-x-14 mr-0 md:mr-20 shadow-lg" />
-      <div class="flex-shrink-0 mb-4 md:mb-0 md:mr-10" />
+      <div className="flex flex-col md:flex-row items-center self-center justify-center space-x-0 md:space-x-14 mr-0 md:mr-20 shadow-lg" />
+      <div className="flex-shrink-0 mb-4 md:mb-0 md:mr-10" />
 
-      <div class="flex flex-col md:flex-row justify-between items-center p-4">
-        <div class="ml-2 md:ml-5 flex-shrink-0 mb-4 md:mb-0 w-full md:w-1/2">
+      <div className="flex flex-col md:flex-row justify-between items-center p-4">
+        <div className="ml-2 md:ml-5 flex-shrink-0 mb-4 md:mb-0 w-full md:w-1/2">
           <img
             src="https://img.freepik.com/premium-photo/modern-car-black-background-with-unusual-color-shimmering-black-goldfuturistic-innovative-car-generative-ai_76964-12088.jpg"
             alt="Smart Parking Car"
-            class="max-w-full h-auto"
+            className="max-w-full h-auto"
           />
         </div>
 
-        <div id="about-us" class="text-center md:text-left md:ml-8">
-          <h2 class="text-3xl font-bold mb-4 mt-2 text-left">About us</h2>
-          <h4 class="text-lg md:max-w-2xl text-left">
+        <div id="about-us" className="text-center md:text-left md:ml-8">
+          <h2 className="text-3xl font-bold mb-4 mt-2 text-left">About us</h2>
+          <h4 className="text-lg md:max-w-2xl text-left">
             Hi there, this smart parking car system aims to revolutionize the
             way national drivers secure parking spaces by providing a convenient
             and efficient booking platform. With our innovative technology,
@@ -166,7 +176,7 @@ export default function Landing() {
             user-friendly interfaces, and advanced security measures to
             guarantee a hassle-free parking solution for drivers nationwide.
           </h4>
-          <button class="bg-[#0C7489] text-white py-3 px-6 mt-4 transition duration-300 ease-in-out block md:inline-block md:ml-auto">
+          <button className="bg-[#0C7489] text-white py-3 px-6 mt-4 transition duration-300 ease-in-out block md:inline-block md:ml-auto">
             Know more
           </button>
         </div>
