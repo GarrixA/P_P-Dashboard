@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import park from "./prof.png";
@@ -7,7 +6,9 @@ import { BsBuildingsFill } from "react-icons/bs";
 import { MdLogout, MdOutlineSettings } from "react-icons/md";
 import { LuParkingCircle } from "react-icons/lu";
 import { FiMenu } from "react-icons/fi";
+import BulidingFloor from "./BulidingFloor";
 import { IoNotifications } from "react-icons/io5";
+import { RiSettings2Fill } from "react-icons/ri";
 import images from "../../../Dropdowns/UserDropdownArray";
 
 export default function Sidebar() {
@@ -65,8 +66,8 @@ export default function Sidebar() {
             
             <hr className=" md:min-w-full sm:flex hidden" />
 
-            <ul className="hidden md:flex  md:flex-col md:min-w-full flex-col list-none ml-4 p-4">
-              <li className="items-center flex">
+            <ul className="  sm:flex-col md:min-w-full sm:flex flex-col list-none ml-4 p-4">
+              <li className="items-center flex hover:bg-gray-100 ml-1">
               <LuLayoutDashboard className="text-[1rem]"/>
                 <Link
                   className={
@@ -83,7 +84,28 @@ export default function Sidebar() {
                 </Link>
               </li>
 
+              {/* <li className="items-center flex">
+                <LuParkingCircle className="text-[1rem]"/>
+                <Link
+                  className={
+                    "py-3 block text-[1rem]"
+                  }
+                  to="/managerDashboard/floors"
+                >
+                  <i
+                    className={
+                      "fas fa-tools mr-2 "
+                    }
+                  ></i>{""}
+                  Floors
+                </Link>
+              </li> */}
+
               <li className="items-center flex">
+                  <BulidingFloor/>
+              </li>
+
+              {/* <li className="items-center flex">
                 <LuParkingCircle className="text-[1rem]"/>
                 <Link
                   className={
@@ -98,43 +120,26 @@ export default function Sidebar() {
                   ></i>{" "}
                   Total Slots
                 </Link>
-              </li>
+              </li> */}
 
-              <li className="items-center flex">
-                <LuParkingCircle className="text-[1rem]"/>
+           <li className="items-center flex hover:bg-gray-100 ml-1">
+              <RiSettings2Fill className="text-[1rem]"/>
                 <Link
                   className={
-                    "py-3 block text-[1rem]"
-                  }
-                  to="/managerDashboard/booked"
-                >
-                  <i
-                    className={
-                      "fas fa-tools mr-2 "
-                    }
-                  ></i>{" "}
-                  Booked Slots
-                </Link>
-              </li>
-
-              <li className="items-center flex">
-              <MdOutlineSettings className="text-[1rem]"/>
-                <Link
-                  className={
-                    "py-3 block text-[1rem]"
+                    " py-3  block text-[1rem]"
                   }
                   to="/managerDashboard/settings"
                 >
                   <i
                     className={
-                      "fas fa-tools mr-2 "
+                      "fas fa-tv mr-2 text-sm"
                     }
-                  ></i>{" "}
-                  Setting
+                  ></i>
+                 Settings
                 </Link>
               </li>
 
-              <li className="items-center flex">
+              <li className="items-center flex hover:bg-gray-100">
               <MdLogout className="text-[1rem]"/>
                 <Link
                   className={
@@ -232,4 +237,3 @@ export default function Sidebar() {
     </>
   );
 }
-

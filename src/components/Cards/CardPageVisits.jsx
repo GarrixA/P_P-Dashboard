@@ -4,17 +4,19 @@ import CardPageArray from "./CardPageArra";
 import { FaPen } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
-import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
+import ReactPaginate from "react-paginate";
+import { CirclesWithBar } from "react-loader-spinner";
+
 
 import "react-toastify/dist/ReactToastify.css";
 
 import axios from "axios";
-import { CirclesWithBar } from "react-loader-spinner";
 import Editbuilding from "./Editbuilding";
 
 const CardPageVisits = () => {
   const [buildings, setBuildings] = useState([]);
+  const [loading, setLoading] = useState (false)
 
   const [id, setBuildingId] = useState("");
   const [buildingName, setBuildingName] = useState("");
@@ -23,171 +25,112 @@ const CardPageVisits = () => {
   const [Street, setStreet] = useState("");
   const [Longitude, setLongitude] = useState("");
   const [Latitude, setLatitude] = useState("");
-  const [Price, setPrice] = useState("");
+
   const [profiPicture, setProfilePictue] = useState();
-  const [Floors, setFloors] = useState();
+
   const [Description, setDescription] = useState("");
   const [managerEmail, setManagerEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-    // properties of inputs building//
+  // properties of inputs building//
 
-    const [openModal, setopenModal] = useState(false);
-    const toggleModal = () => {
-      setopenModal(!openModal);
-    };
-  
-    const [open, setOpen] = useState();
-    const toggleOpen = () => {
-      setOpen(!open);
-    };
-  
-    const [edit, setEdit] = useState(false);
-    const toggleEdit = () => {
-      setEdit(!edit);
-    };
-  
-    //fetch building//
-  
-    const fetchBuildings = () => {
-      setIsLoading(true)
-      let token = localStorage.getItem("token");
-      // console.log("Token:", token);
-      console.log(token);
-  
-      axios({
-        url: "https://smart-parking-api-3g3e.onrender.com/parking/buildings/getAllBuildingData",
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }).then((response) => {
-        console.log(response.data.allBuildings);
-        setIsLoading(false)
-  
-        if (response.data) {
-          toast.success(response.data.message);
-          setBuildings(response.data.allBuildings);
-        } else {
-          console.error("Unexpected response format:", response);
-        }
-      });
-    };
-    useEffect(() => {
-      fetchBuildings();
-    }, []);
-  
-    // fetch building is ended from here//
-  
-    // Addbuilding //
-  
-    const Addnewbuilging = async () => {
-      let token = localStorage.getItem("token");
-  
-      // Create a FormData object to handle file upload
-      const formData = new FormData();
-      formData.append("buildingName", buildingName);
-      formData.append("Address", location);
-      formData.append("District", District);
-      formData.append("Sector", Sector);
-      formData.append("Street", Street);
-      formData.append("Longitude", Longitude);
-      formData.append("Latitude", Latitude);
-      formData.append("Price", Price);
-      formData.append("profilePicture", profiPicture);
-      formData.append("Floors", Floors);
-      formData.append("Description", Description);
-      formData.append("managerEmail", managerEmail);
-  
-      try {
-        const response = await axios.post(
-          "https://smart-parking-api-3g3e.onrender.com/parking/buildings/addNewBuilding",
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-  
+  const [openModal, setopenModal] = useState(false);
+  const toggleModal = () => {
+    setopenModal(!openModal);
+  };
+
+  const [open, setOpen] = useState();
+  const toggleOpen = () => {
+    setOpen(!open);
+  };
+
+  const [edit, setEdit] = useState(false);
+  const toggleEdit = () => {
+    setEdit(!edit);
+  };
+
+  //fetch building//
+
+  const fetchBuildings = () => {
+    setIsLoading(true)
+    let token = localStorage.getItem("token");
+    // console.log("Token:", token);
+    console.log(token);
+
+    axios({
+      url: "https://smart-parking-api-3g3e.onrender.com/parking/buildings/getAllBuildingData",
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((response) => {
+      console.log(response.data.allBuildings);
+      setIsLoading(false)
+
+      if (response.data) {
         toast.success(response.data.message);
-      } catch (error) {
-        console.error(error);
-  
-        if (error.response) {
-          toast.error(`Error: ${error.response.data.message}`);
-        } else if (error.request) {
-          toast.error("No response received from the server");
-        } else {
-          toast.error("Something went wrong");
-        }
+        setBuildings(response.data.allBuildings);
+      } else {
+        console.error("Unexpected response format:", response);
       }
-    };
+    });
+  };
+  useEffect(() => {
+    fetchBuildings();
+  }, []);
+
+  // fetch building is ended from here//
+
+  // Addbuilding //
+
+  const Addnewbuilging = async () => {
+    let token = localStorage.getItem("token");
   
-    //fetch addnew building is ended from here//
+    // Create a FormData object to handle file upload
+    const formData = new FormData();
+    formData.append("buildingName", buildingName);
+    formData.append("Address", location);
+    formData.append("District", District);
+    formData.append("Sector", Sector);
+    formData.append("Street", Street);
+    formData.append("Longitude", Longitude);
+    formData.append("Latitude", Latitude);
   
-    // Editing building //
-  
-    const EditBuildings = async (id, allBuildings) => {
-      try {
-        let token = localStorage.getItem("token");
-  
-        if (!buildingData) {
-          throw new Error("Building data is missing");
-        }
-  
-        const formData = new FormData();
-  
-        formData.append("buildingName", buildingName);
-        formData.append("Address", location);
-        formData.append("District", District);
-        formData.append("Sector", Sector);
-        formData.append("Street", Street);
-        formData.append("Longitude", Longitude);
-        formData.append("Latitude", Latitude);
-        formData.append("Price", Price);
-        formData.append("profilePicture", profiPicture);
-        formData.append("Floors", Floors);
-        formData.append("Description", Description);
-        formData.append("managerEmail", managerEmail);
-  
-        const response = await axios.post(
-          `https:/smart-parking-api-3g3e.onrender.com/parking/buildings/updateBuilding/${id}`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data", // Set content type for FormData
-            },
-          }
-        );
-  
-        toast.success(response.data.message);
-      } catch (error) {
-        console.error(error);
-  
-        if (error.response) {
-          toast.error(`Error: ${error.response.data.message}`);
-        } else if (error.request) {
-          toast.error("No response received from the server");
-        } else {
-          toast.error("Something went wrong");
-        }
-      }
-    };
-  
-    //deleting building
-  
-    const handleDeleteBuildings = async (id) => {
-      if (window.confirm("Are you sure you want to delete this building?")) {
-        let token = localStorage.getItem("token");
-        axios({
-          url: `https://smart-parking-api-3g3e.onrender.com/parking/buildings/deleteBuilding/${id}`,
-          method: "DELETE",
+    formData.append("profilePicture", profiPicture);
+ 
+    formData.append("Description", Description);
+    formData.append("managerEmail", managerEmail);
+
+    try {
+      setLoading(true)
+      const response = await axios.post(
+        "https://smart-parking-api-3g3e.onrender.com/parking/buildings/addNewBuilding",
+        formData,
+        {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
+        }
+      );
+
+      toast.success(response.data.message);
+    } catch (error) {
+       setLoading (false);
+      console.error(error);
+
+      if (error.response) {
+        toast.error(`Error: ${error.response.data.message}`);
+        setLoading(false)
+      } else if (error.request) {
+        toast.error("No response received from the server");
+        setLoading(false);
+      } else {
+        toast.error("Something went wrong");
+        setLoading(false);
+      }
+    } finally {
+       setLoading(false)
     }
   };
 
@@ -212,86 +155,85 @@ const CardPageVisits = () => {
           toast.success("Building deleted successfully");
           console.log(response, "Response");
         })
-          .then((response) => {
-            toast.success("Building deleted successfully");
-            console.log(response, "Response");
-          })
-          .catch((error) => {
-            toast.error(error.response.data.message);
-            console.log(error, "Error");
-          });
-      }
-    };
+        .catch((error) => {
+          toast.error(error.response.data.message);
+          console.log(error, "Error");
+        });
+    }
+  };
+
   const [pageNumber, setPageNumber] = useState(0);
-  const buildingsPerPage = 4;
+  const buildingsPerPage = 8;
   const pageCount = Math.ceil(buildings.length / buildingsPerPage);
   const pagesVisited = pageNumber * buildingsPerPage;
   const displaybuildings = buildings
     .slice(pagesVisited, pagesVisited + buildingsPerPage)
-    .map((items, index) => {
+    .map((items, idx) => {
       return (
         <tr
-          key={index + 1}
-          className="hover:bg-slate-400 hover:bg-opacity-50 text-xl font-semibold"
-        >
-          {/*
-        
-            
-         */}
+                      key={idx + 1}
+                      className="hover:bg-slate-400 hover:bg-opacity-50 text-xl font-semibold"
+                    >
+                      {/*
+                      
+                          
+                       */}
 
-          <td
-            className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-            onClick={toggleOpen}
-          >
-            {index}
-          </td>
-          <td
-            className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-            onClick={toggleOpen}
-          >
-            {items.buildingName}
-          </td>
-          <td
-            className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-            onClick={toggleOpen}
-          >
-            <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-            {items.Street}
-          </td>
-          <td
-            className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-            onClick={toggleOpen}
-          >
-            <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-            {items.managerEmail}
-          </td>
-          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 flex space-x-3">
-            <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-            <span>
-              <FaPen onClick={toggleEdit} id={items._id} />
-            </span>
-            <span className=" text-red-600">
-              <FaTrash
-                onClick={() => handleDeleteBuildings(items._id)}
-              />
-              <ToastContainer />
-            </span>
-          </td>
-        </tr>
-      );
-    })
-    const changePage=({ selected })=>{
-      setPageNumber(selected)
-    };
+                      <td
+                        className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        onClick={toggleOpen}
+                      >
+                        {idx}
+                      </td>
+                      <td
+                        className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        onClick={toggleOpen}
+                      >
+                        {items.buildingName}
+                      </td>
+                      <td
+                        className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        onClick={toggleOpen}
+                      >
+                        <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
+                        {items.Street}
+                      </td>
+                      <td
+                        className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        onClick={toggleOpen}
+                      >
+                        <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
+                        {items.managerEmail}
+                      </td>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 flex space-x-3">
+                        <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
+                        <span>
+                          <Link to={`/dashboard/Editbuilding/${items._id}`}>
+                            <FaPen />
+                          </Link>
+                        </span>
+                        <span className=" text-red-600">
+                          <FaTrash
+                            onClick={() => handleDeleteBuildings(items._id)}
+                          />
+                          <ToastContainer />
+                        </span>
+                      </td>
+                    </tr>
+                          );
+                        })
+                        const changePage=({ selected })=>{
+                          setPageNumber(selected)
+                        };
 
   return (
     <>
-     {isLoading ? (
+       {isLoading ? (
       <CirclesWithBar
   height="300"
   width="1000"
   radius="9"
-  color="#7B3F00"
+  color="#0C7489 "
   ariaLabel="loading"
   className="mx-auto absolute top-0 right-0 mb-100"
 />
@@ -392,16 +334,7 @@ const CardPageVisits = () => {
                     />
                   </div>
 
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Price</label>
-                    <input
-                      type="number"
-                      placeholder="price"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={Price}
-                      onChange={(e) => setPrice(e.target.value)}
-                    />
-                  </div>
+               
 
                   <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
                     <label>profilePicture</label>
@@ -412,16 +345,6 @@ const CardPageVisits = () => {
                     />
                   </div>
 
-                  <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-                    <label>Floors</label>
-                    <input
-                      type="text"
-                      placeholder="floors"
-                      className="p-1 mt-2 rounded border w-3/5"
-                      value={Floors}
-                      onChange={(e) => setFloors(e.target.value)}
-                    />
-                  </div>
 
                   <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
                     <label>Description</label>
@@ -450,10 +373,12 @@ const CardPageVisits = () => {
                       onClick={async (e) => {
                         e.preventDefault();
                         await Addnewbuilging();
+                      
                       }}
                     >
-                      Add
-                    </button>
+                     {loading?"adding..":"add"}
+                    </button >
+
                     <ToastContainer />
                   </div>
                 </form>
@@ -498,31 +423,31 @@ const CardPageVisits = () => {
                 <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                   Action
                 </th>
-                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                  Action
-                </th>
               </tr>
             </thead>
             <tbody className="cursor-pointer shadow-lg">
-            {displaybuildings}
-
+             {displaybuildings}
             </tbody>
            
           </table>
-                  <ReactPaginate
-      previousLabel="Previous"
-      nextLabel="Next"
-      pageCount={pageCount}
-      onPageChange={changePage}
-      containerClassName="flex justify-center mt-4"
-      previousLinkClassName="bg-blue-500 px-4 py-2 text-white  border rounded-md border-black-400 mr-2 hover:bg-gray-200 cursor-pointer"
-      nextLinkClassName="bg-blue-500 px-4 py-2 text-white border rounded-md border-black-400 ml-2 hover:bg-gray-200 cursor-pointer"
-      disabledClassName="text-gray-400 cursor-not-allowed"
-      activeClassName="bg-blue-700 text-white rounded-md p-2 cursor-pointer"
-    />
         </div>
+        
       </div>
-    </>
+      <div className=" relative bottom-32">
+      <ReactPaginate
+  previousLabel="Previous"
+  nextLabel="Next"
+  pageCount={pageCount}
+  onPageChange={changePage}
+  containerClassName="flex items-center justify-center my-4"
+  previousLinkClassName="px-4 py-2 bg-blue-500 text-white-700 rounded-md mr-2"
+  nextLinkClassName="px-4 py-2 bg-blue-500 text-white-700 rounded-md ml-2"
+  pageClassName="flex items-center justify-center mx-2"
+  activeClassName="bg-blue-500 w-4 text-white rounded-full"
+/>
+      </div>
+
+      </>
       )}
       </>
   );

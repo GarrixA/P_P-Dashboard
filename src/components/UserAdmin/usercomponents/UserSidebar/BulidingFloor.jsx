@@ -4,19 +4,20 @@ import { BiSolidBuildingHouse } from "react-icons/bi";
 import { useState } from "react";
 
 export default function BulidingFloor() {
-
   const [floor, setFloor] = useState([]);
 
-  const FetchFloors = ()=>{
-  }
+  const FetchFloors = () => {};
   return (
     <>
       <Sidebar>
-      <BiSolidBuildingHouse className="absolute top-3 z-10 text-[1.4rem]"/>
+        <BiSolidBuildingHouse className="absolute top-3 z-10 text-[1.4rem]" />
         <Menu>
-          <SubMenu label="Floors" style={{
-            paddingLeft: "30px"
-            }}>
+          <SubMenu
+            label="Floors"
+            style={{
+              paddingLeft: "30px",
+            }}
+          >
             <SubMenu label="Ground Floor">
               <Link to={"/managerDashboard/slots"}>
                 <MenuItem>Total Slots</MenuItem>
@@ -43,8 +44,7 @@ export default function BulidingFloor() {
                 <MenuItem>Remaining Slots</MenuItem>
               </Link>
             </SubMenu>
-            <SubMenu label="Add Floor">
-            </SubMenu>
+            <SubMenu label="Add Floor"></SubMenu>
           </SubMenu>
         </Menu>
       </Sidebar>

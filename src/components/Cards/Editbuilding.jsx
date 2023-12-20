@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { useParams } from "react-router-dom";
@@ -8,40 +8,47 @@ const EditBuilding = () => {
 
     const param = useParams();
     const BuildingId = param.id;
+    const [loading,setLoading] = useState (false);
     
-//   const [id, setBuildingid] = useState("");
+// const [id, setBuildingid] = useState("");
   const [buildingName, setBuildingName] = useState("");
   const [District, setDistrict] = useState("");
   const [Sector, setSector] = useState("");
   const [Street, setStreet] = useState("");
   const [Longitude, setLongitude] = useState("");
   const [Latitude, setLatitude] = useState("");
-  const [Price, setPrice] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
-  const [Floors, setFloors] = useState("");
   const [Description, setDescription] = useState("");
   const [managerEmail, setManagerEmail] = useState("");
 
   
+
+   //fetch buildings here//
+
+
+    // update building
+
+  
   const updateBuilding = async () => {
     const token = localStorage.getItem("token");
-    console.log(buildingName);
+
     const formData = new FormData();
     formData.append("buildingName", buildingName);
-    formData.append("Address", location); // Check if location is defined somewhere
+    formData.append("Address", location); 
     formData.append("District", District);
     formData.append("Sector", Sector);
     formData.append("Street", Street);
     formData.append("Longitude", Longitude);
     formData.append("Latitude", Latitude);
-    formData.append("Price", Price);
+   
     formData.append("profilePicture", profilePicture);
-    formData.append("Floors", Floors);
+  
     formData.append("Description", Description);
     formData.append("managerEmail", managerEmail);
 
     try {
-     
+          
+          setLoading(true)
           const response = await axios({
             method: "PUT",
             url: `https://smart-parking-api-3g3e.onrender.com/parking/buildings/updateBuilding/${BuildingId}`,
@@ -63,6 +70,8 @@ const EditBuilding = () => {
       } else {
         toast.error("Something went wrong");
       }
+    } finally{
+      setLoading(false)
     }
 
   };
@@ -143,16 +152,7 @@ const EditBuilding = () => {
           />
         </div>
 
-        <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-          <label>Price</label>
-          <input
-            type="number"
-            placeholder="price"
-            className="p-1 mt-2 rounded border w-3/5"
-            value={Price}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-        </div>
+      
 
         <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
           <label>profilePicture</label>
@@ -163,16 +163,7 @@ const EditBuilding = () => {
           />
         </div>
 
-        <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
-          <label>Floors</label>
-          <input
-            type="text"
-            placeholder="floors"
-            className="p-1 mt-2 rounded border w-3/5"
-            value={Floors}
-            onChange={(e) => setFloors(e.target.value)}
-          />
-        </div>
+       
 
         <div className="flex space-x-5  mx-4 items-center font-semibold ml-10 justify-between mr-10 mt-">
           <label>Description</label>
@@ -206,7 +197,7 @@ const EditBuilding = () => {
               await updateBuilding();
             }}
           >
-            Update
+           {loading?"updating..":"update"}
           </button>
           <ToastContainer />
         </div>

@@ -1,73 +1,121 @@
-import React from "react";
+import React, { useState } from "react";
 import playstore from "../assets/playstore.png";
 import appstore from "../assets/appstore.png";
 import { FaTwitter, FaInstagram, FaFacebook } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { IoMenuSharp } from "react-icons/io5";
 
 export default function Landing() {
+
+  const [openModal, setOpenModal] = useState("")
+
+  const toggleModal = ()=>{
+    setOpenModal (!openModal)
+  }
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     element.scrollIntoView({ behavior: "smooth" });
+    toggleModal
   };
 
   return (
     <div className="">
-      <div className="flex flex-col md:flex-row justify-between items-center p-4">
-        <div class="flex justify-between items-center">
-          <div class="landing-page-logo mb-4 md:mb-0 flex items-center">
+      <div class="flex flex-col md:flex-row justify-between items-center p-4">
+        <div class="flex justify-between  items-center w-full md:w-1/5 ">
+          <div class="landing-page-logo mb-4 md:mb-0 flex items-center justify-between flex w-full md:justify-start">
             <img
               src="https://img.freepik.com/premium-wektory/przypnij-szablon-logo-parkingu-wektor-premium_316488-5081.jpg?w=2000"
               class="w-32"
               alt="Logo"
             />
-
-            <span class="ml-2 font-bold">smartcarparking</span>
+            <span class="ml-2 font-bold text-start float-left w-full">
+              smartcarparking
+            </span>
           </div>
+          <IoMenuSharp
+            className="md:hidden flex text-[2rem] mb-5"
+            onClick={toggleModal}
+          />
         </div>
 
-        <div className="flex items-center mr-10">
-          <div className="text-black">
+        <div class="hidden md:flex items-center md:mr-10 ">
+          <div class="text-black">
             <a
               href="#"
               onClick={() => scrollToSection("about-us")}
-              className="mr-4"
+              class="block md:inline-block mr-4"
             >
               About us
             </a>
             <a
               href="#"
               onClick={() => scrollToSection("contact-us")}
-              className="mr-4"
+              class="block md:inline-block mr-4"
             >
               Contact us
             </a>
-
             <a
               href="#"
               onClick={() => scrollToSection("location")}
-              className="mr-4"
+              class="block md:inline-block mr-4"
             >
               Location
             </a>
-
             <Link to={"login"}>
-              <a href="#" className="mr-4">
+              <a href="#" class="block md:inline-block">
                 Login
               </a>
             </Link>
           </div>
         </div>
       </div>
+      {openModal && (
+        <div class="md:hidden flex text-2xl font-semibold md:mr-10 bg-white absolute w-full h-full">
+          <div class="text-black flex flex-col  w-full m-5 space-y-2">
+            <a
+              href="#"
+              onClick={() => scrollToSection("about-us")}
+              class="block md:inline-block mr-4"
+            >
+              About us
+            </a>
+            <a
+              href="#"
+              onClick={() => scrollToSection("contact-us")}
+              class="block md:inline-block mr-4"
+            >
+              Contact us
+            </a>
+            <a
+              href="#"
+              onClick={() => scrollToSection("location")}
+              class="block md:inline-block mr-4"
+            >
+              Location
+            </a>
+            <Link to={"login"}>
+              <a href="#" class="block md:inline-block">
+                Login
+              </a>
+            </Link>
+          </div>
+        </div>
+      )}
 
       <div className="flex flex-col md:flex-row justify-between items-center p-4">
         <div className="landing-page-description text-center md:text-left md:pr-8 md:w-1/2 ml-10">
           <h1 className="text-4xl font-bold text-black-800 mb-6 md:mb-10">
             Welcome!
           </h1>
-          <h3 className="text-2xl font-semibold text-black-600 mb-2">
+
+          <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-black-600 mb-2">
             We lead the way in car park management
           </h3>
-          <span className="text-black " style={{ fontSize: "19px" }}>
+
+          <span
+            className="md:mr-10 block sm:inline"
+            style={{ fontSize: "19px", textAlign: "left" }}
+          >
             Le Lorem Ipsum est simplement du faux texte employé<br></br> dans la
             composition et la mise en page avant impression.
           </span>
@@ -98,7 +146,7 @@ export default function Landing() {
       <div class="flex-shrink-0 mb-4 md:mb-0 md:mr-10" />
 
       <div class="flex flex-col md:flex-row justify-between items-center p-4">
-        <div class="ml-5 flex-shrink-0 mb-4 md:mb-0 w-full md:w-1/2">
+        <div class="ml-2 md:ml-5 flex-shrink-0 mb-4 md:mb-0 w-full md:w-1/2">
           <img
             src="https://img.freepik.com/premium-photo/modern-car-black-background-with-unusual-color-shimmering-black-goldfuturistic-innovative-car-generative-ai_76964-12088.jpg"
             alt="Smart Parking Car"
@@ -107,8 +155,8 @@ export default function Landing() {
         </div>
 
         <div id="about-us" class="text-center md:text-left md:ml-8">
-          <h2 class="text-3xl font-bold mb-4 mt-2">About us</h2>
-          <h4 class="text-lg md:max-w-2xl">
+          <h2 class="text-3xl font-bold mb-4 mt-2 text-left">About us</h2>
+          <h4 class="text-lg md:max-w-2xl text-left">
             Hi there, this smart parking car system aims to revolutionize the
             way national drivers secure parking spaces by providing a convenient
             and efficient booking platform. With our innovative technology,
@@ -118,22 +166,21 @@ export default function Landing() {
             user-friendly interfaces, and advanced security measures to
             guarantee a hassle-free parking solution for drivers nationwide.
           </h4>
-          <button class="bg-[#0C7489] text-white py-3 px-6 mt-4 transition duration-300 ease-in-out">
+          <button class="bg-[#0C7489] text-white py-3 px-6 mt-4 transition duration-300 ease-in-out block md:inline-block md:ml-auto">
             Know more
           </button>
         </div>
       </div>
 
-      <div id="contact-us" className="text-3xl mb-4 mt-8 md:mt-24 ml-4 md:">
+      <div id="contact-us" className="text-3xl mb-4 mt-8 md:mt-24  md:">
         <div className=" justify-between items-center p-4">
           <span className="items-center p-4 text-lg font-semibold text-gray-800">
             our patners location
           </span>
-          <div className="items-center p-4">
+          <div className="items-center md:w-full p-4 ">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d30607.79514638295!2d30.066595630129367!3d-1.9550632439832505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1ssp rwanda!5e0!3m2!1sen!2srw!4v1663256798141!5m2!1sen!2srw"
-              width="1500px"
-              height="600px"
+              className="h-96 w-full"
             />
           </div>
         </div>

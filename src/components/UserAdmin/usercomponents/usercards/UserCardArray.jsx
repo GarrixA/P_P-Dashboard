@@ -64,4 +64,5 @@ const UserCard = [
     incomplete: 0,
   },
 ];
+
 export default UserCard

@@ -3,18 +3,12 @@ import UserCard from "./UserCardArray";
 import axios from "axios";
 import { useEffect } from "react";
 import { ToastContainer,toast } from "react-toastify";
-
+import ReactPaginate from "react-paginate";
 export default function UserCardVisit() {
-
   const [users, setUsers] = useState ([]);
- 
 //fetch users //
-
-
    const fetchUsers = () => {
      let token = localStorage.getItem("token");
- 
-
      axios({
        url: "https://smart-parking-api-3g3e.onrender.com/parking/users/getusers",
        method: "GET",
@@ -24,31 +18,57 @@ export default function UserCardVisit() {
      }).then((response) => {
        console.log(response.data);
        setUsers(response.data)
-
      });
    };
    useEffect(() => {
      fetchUsers();
    }, []);
-
-
-
-
-
+   const [pageNumber, setPageNumber] = useState(0);
+  const usersPerPage = 8;
+  const pageCount = Math.ceil(users.length / usersPerPage);
+  const pagesVisited = pageNumber * usersPerPage;
+  const displayusers = users
+    .slice(pagesVisited, pagesVisited + usersPerPage)
+    .map((items, idx) => {
+      return (
+        <tr key={idx}>
+        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+          {`${items.fullNames}`}
+        </th>
+        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+          {items.email}
+        </td>
+        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+          {items.location}
+        </td>
+        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+          <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
+          {items.role}
+        </td>
+        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+          <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
+          {items.phoneNo}
+        </td>
+      </tr>
+    );
+  })
+  const changePage=({ selected })=>{
+    setPageNumber(selected)
+  };
   return (
     <>
-      <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-        <div className="rounded-t mb-0 px-4 py-3 border-0">
-          <div className="flex flex-wrap items-center">
-            <div className="relative w-full px-4 max-w-full flex-grow flex-1">
-              <h3 className="font-semibold text-base text-blueGray-700">
-                Total users
-              </h3>
-            </div>
-            <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-              <button
-                className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                type="button"
+<div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+  <div className="rounded-t mb-0 px-4 py-3 border-0">
+    <div className="flex flex-wrap items-center">
+      <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+        <h3 className="font-semibold text-base text-blueGray-700">
+          Total users
+        </h3>
+      </div>
+      <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+        <button
+          className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          type="button"
               >
                 See all
               </button>
@@ -56,7 +76,8 @@ export default function UserCardVisit() {
           </div>
         </div>
         <div className="block w-full overflow-x-auto">
-          {/* Projects table */}
+                       {/* Projects table */}
+          <div className="min-w-full overflow-x-auto">
           <table className="items-center w-full bg-transparent border-collapse">
             <thead>
               <tr>
@@ -81,33 +102,26 @@ export default function UserCardVisit() {
               </tr>
             </thead>
             <tbody>
-              {users.map((items, idx) => {
-                return (
-                  <tr key={idx}>
-                    <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                      {`${items.fullNames}`}
-                    </th>
-                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                      {items.email}
-                    </td>
-                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                      {items.location}
-                    </td>
-                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                      <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-                      {items.role}
-                    </td>
-                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                      <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-                      {items.phoneNo}
-                    </td>
-                  </tr>
-                );
-              })}
+             {displayusers}
             </tbody>
           </table>
+          </div>
+          <ReactPaginate
+  previousLabel="Previous"
+  nextLabel="Next"
+  pageCount={pageCount}
+  onPageChange={changePage}
+  containerClassName="flex items-center justify-center my-4"
+  previousLinkClassName="px-4 py-2 bg-blue-500 text-gray-700 rounded-md mr-2"
+  nextLinkClassName="px-4 py-2 bg-blue-500 text-gray-700 rounded-md ml-2"
+  pageClassName="flex items-center justify-center mx-2"
+  activeClassName="bg-blue-700 w-4 text-white rounded-full"
+  breakClassName="hidden sm:block"
+  breakLinkClassName="px-4 py-2 bg-blue-500 text-gray-700 rounded-md mx-2 sm:hidden"
+/>
+
         </div>
       </div>
     </>
   );
-}
+};
